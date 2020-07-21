@@ -10,6 +10,13 @@ connectDB();
 
 // Add Endpoints
 app.get('/', (req, res) => res.send('API Running'));
+
+// Define Routes
+app.use('/api/users', require('./routes/api/users'));
+app.use('/api/profile', require('./routes/api/profile'));
+app.use('/api/posts', require('./routes/api/posts'));
+app.use('/api/auth', require('./routes/api/auth'));
+
 // Will look for an envirment variable PORT (During cloud deployment)
 // else it will use 5000
 const PORT = process.env.PORT || 5000;

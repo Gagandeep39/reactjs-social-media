@@ -1,11 +1,12 @@
 # Notes
 - [Notes](#notes)
-  - [Packages Uses](#packages-uses)
-  - [package.json](#packagejson)
+  - [Packages Used](#packages-used)
+  - [Execution Script `package.json`](#execution-script-packagejson)
   - [Running the Application](#running-the-application)
   - [Connection](#connection)
+  - [Endpoints](#endpoints)
 
-## Packages Uses
+## Packages Used
 - `express` - Create Server
 - `expressvalidator` - Form Validation
 - `bcryptjs` - Paword Encryption
@@ -17,7 +18,7 @@
 - `nodemon` - To prevent our server from sleeping
 - `concurrently` - To run express and react dev server at the same time
 
-## package.json
+## Execution Script `package.json`
 ```json
 "scripts": {
     "start": "node server",
@@ -36,3 +37,10 @@
   - Cluster -> Select your cluster -> Connect -> Connect your application -> Copy connection string
 3. Write conenction logic and export it (API key is accesssed here using `config` library)
 4. Use the exported variable amd connect to server from `server.js`
+
+## Endpoints
+- Default - `http://localhost:5000`
+- User API - `http://localhost:5000/api/users`
+- Auth API - `http://localhost:5000/api/auth`
+- Posts API - `http://localhost:5000/api/posts`
+- Profile API - `http://localhost:5000/api/profile`
