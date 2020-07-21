@@ -8,6 +8,10 @@ const connectDB = require('./config/db');
 // Execute the Connection
 connectDB();
 
+// Initialize middileware
+// Allows accessing request body
+app.use(express.json({ extended: false }))
+
 // Add Endpoints
 app.get('/', (req, res) => res.send('API Running'));
 

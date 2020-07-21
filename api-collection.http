@@ -4,6 +4,16 @@ GET http://localhost:5000
 ### Users
 GET http://localhost:5000/api/users
 
+### Test body of request
+POST http://localhost:5000/api/users
+Content-Type: application/json
+
+{
+    "name": "Gagandeep Singh",
+    "email": "singh.gagandeep3911@gmail.com",
+    "password": "123456"
+}
+
 ### Auth
 GET http://localhost:5000/api/auth
 
