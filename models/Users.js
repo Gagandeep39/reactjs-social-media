@@ -3,8 +3,8 @@
  * Defining a moongose document Structure
  */
 
-const moongose = require('moongose')
-const UserSchema = new moongose.schema({
+const mongoose = require('mongoose')
+const UserSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -25,4 +25,6 @@ const UserSchema = new moongose.schema({
         type: Date,
         default: Date.now()
     }
-})
+});
+
+module.exports = User = mongoose.model('user', UserSchema);
