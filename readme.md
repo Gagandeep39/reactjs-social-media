@@ -5,6 +5,7 @@
   - [Running the Application](#running-the-application)
   - [Connection](#connection)
   - [Endpoints](#endpoints)
+  - [Check Data in server](#check-data-in-server)
 
 ## Packages Used
 - `express` - Create Server
@@ -44,3 +45,6 @@
 - Auth API - `http://localhost:5000/api/auth`
 - Posts API - `http://localhost:5000/api/posts`
 - Profile API - `http://localhost:5000/api/profile`
+
+##  Check Data in server 
+- Mongo Dashboard -> Select your cluster -> Collections
