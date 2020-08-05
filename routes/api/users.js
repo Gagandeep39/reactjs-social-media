@@ -10,7 +10,10 @@ const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs')
 // Import User model
 const User = require('../../models/Users');
-const { findOne } = require('../../models/Users');
+// Import json web toke
+const jwt = require('jsonwebtoken');
+// import jwt secret from config
+const config = require('config')
 
 /**
  * @route GET /api/users
@@ -81,8 +84,21 @@ router.post('/',
             await user.save();
 
             // 4. Generate a JWT Token
+            const payload = {
+                user: {
+                    // Mongo uses _id but mongoose provide an abstraction for that
+                    id: user.id
+                }
+            }
+            // Returns a token
+            jwt.sign(payload, config.get('jwtSecret'), 
+            {expiresIn: 360000},    // Expiration
+            (err, token) => {
+                if(err) throw err;
+                res.json({token})   // Sucessfullyr eturn tokenif no error
+            })
             // In progress 
-            res.send('Users registered');
+            // res.send('Users registered');
         } catch (error) {
             console.error(error);
             res.status(500).send('Server Error');
