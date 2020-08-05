@@ -23,3 +23,12 @@ GET http://localhost:5000/api/posts
 #### Profile
 GET http://localhost:5000/api/profile
 
+####
+POST http://localhost:5000/api/auth
+Content-Type: application/json
+
+{
+    "email": "singh.gagandeep3911@gmail.com",
+    "password": "123456"
+}
+
