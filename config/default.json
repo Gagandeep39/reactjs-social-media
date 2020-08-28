@@ -1,4 +1,6 @@
 {
     "mongoURI": "mongodb+srv://gagan:ssj39111@devconnector.phadv.mongodb.net/test?retryWrites=true&w=majority",
-    "jwtSecret": "iamlonely"
+    "jwtSecret": "iamlonely",
+    "githubClientId": "[Create in github]",
+    "githubSecret": "[Create in Github]"
 }

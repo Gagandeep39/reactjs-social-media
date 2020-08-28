@@ -1,4 +1,6 @@
 const express = require('express');
+const config = require('config');
+const axios = require('axios');
 const router = express.Router();
 const auth = require('../../middleware/auth');
 const User = require('../../models/Users');
@@ -291,6 +293,30 @@ router.delete('/education/:eduId', auth, async (req, res) => {
   profile.education.splice(removeIndex, 1);
   await profile.save();
   res.json(profile);
+});
+
+/**
+ * @route PUT /api/profile/github/:username
+ * @description Get user repos from github
+ * @access Public
+ */
+router.get('/github/:username', (req, res) => {
+  try {
+    const uri = `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc&client_id=${config.get('githubClientId')}&client_secret=${config.get('githubSecret')}`;
+    const header = { 'user-agent': 'node.js' };
+    axios
+      .get(uri, { headers: header })
+      .then((response) => {
+        if (response.status !== 200)
+          return res.status(404).json({ msg: 'Github account not found' });
+        res.json(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  } catch (error) {
+    res.status(500).send('Server Error');
+  }
 });
 
 module.exports = router;

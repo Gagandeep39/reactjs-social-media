@@ -96,3 +96,6 @@ x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3O
 DELETE http://localhost:5000/api/profile/education/5f496399a791e02ee4ba3b9b
 Content-Type: application/json
 x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3OWRkNmI2MmUyMDkwNTAzMDdhIn0sImlhdCI6MTU5ODYxNzkxNiwiZXhwIjoxNTk4OTc3OTE2fQ.kK20Z4hf2LOivbhjDnc12OlfqXjHb_vuwnf9FvPDHXQ
+
+#### Fetch github repository
+GET http://localhost:5000/api/profile/github/gagandeep39
