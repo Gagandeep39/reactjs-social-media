@@ -100,4 +100,38 @@ router.post(
   }
 );
 
+/**
+ * @route POST /api/profile/
+ * @description Fetch all profile
+ * @access Public
+ */
+router.get('/', async (req, res) => {
+  try {
+    const profiles = await Profile.find().populate('user', ['name', 'avatar']);
+    res.json(profiles);
+  } catch (error) {
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+/**
+ * @route POST /api/profile/user/:userId
+ * @description Fetch profile By ID
+ * @access Public
+ */
+router.get('/user/:userId', async (req, res) => {
+  try {
+    const profile = await Profile.findOne({
+      user: req.params.user_id,
+    }).populate('user', ['name', 'avatar']);
+    if (!profile)
+      return res.status(400).send({ msg: 'No Profile for this User' });
+    res.json(profile);
+  } catch (error) {
+    if (error.kind === 'ObjectId')
+      return res.status(400).send({ msg: 'No Profile for this User' });
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 module.exports = router;
