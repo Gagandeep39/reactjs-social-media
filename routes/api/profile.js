@@ -143,12 +143,65 @@ router.delete('/', auth, async (req, res) => {
   try {
     await Profile.findOneAndRemove({ user: req.user.id });
     await User.findOneAndRemove({ _id: req.user.id });
-    res.json({msg: 'User removed'});
+    res.json({ msg: 'User removed' });
   } catch (error) {
     if (error.kind === 'ObjectId')
       return res.status(400).send({ msg: 'No Profile for this User' });
     res.status(500).send('Internal Server Error');
   }
 });
+
+/**
+ * @route PUT /api/profile/experience
+ * @description Add experience
+ * @access Private
+ */
+router.put(
+  '/experience',
+  [
+    auth,
+    [
+      body('title', 'Title Required').not().isEmpty(),
+      body('company', 'Company name Required').not().isEmpty(),
+      body('from', 'From date Required').not().isEmpty(),
+    ],
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty)
+      return res.status(400).send({ errors: errors.array() });
+
+    const {
+      title,
+      company,
+      from,
+      to,
+      location,
+      current,
+      description,
+    } = req.body;
+
+    const newExperience = {
+      title,
+      company,
+      from,
+      to,
+      location,
+      current,
+      description,
+    };
+
+    try {
+      const profile = await Profile.findOne({ user: req.user.id });
+      // Adds data at the beginning of array
+      profile.experience.unshift(newExperience);
+      await profile.save();
+      res.json(profile)
+    } catch (error) {
+      console.log(error);
+      res.status(500).send('Server Error');
+    }
+  }
+);
 
 module.exports = router;
