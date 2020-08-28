@@ -214,7 +214,7 @@ router.delete('/experience/:expId', auth, async (req, res) => {
   const removeIndex = profile.experience
     .map((item) => item.id)
     .indexOf(req.params.expId);
-  if (removeIndex === -1) res.status(400).send('Invalid Experience ID');
+  if (removeIndex === -1) return res.status(400).send('Invalid Experience ID');
   profile.experience.splice(removeIndex, 1);
   await profile.save();
   res.json(profile);
