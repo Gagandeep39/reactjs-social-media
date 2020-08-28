@@ -24,8 +24,8 @@ router.get('/', authMiddleware, async (req, res) => {
 });
 
 /**
- * @route GET /api/users
- * @description Send token (Unptected route)
+ * @route GET /api/auth
+ * @description Authenticate Usrer and get token
  * @access Public
  */
 router.post(
