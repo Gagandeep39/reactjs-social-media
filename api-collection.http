@@ -54,3 +54,7 @@ x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3O
 #### Fetch Profile By ID
 GET http://localhost:5000/api/profile/user/5f490187b29e134d14536158
 
+#### Delete a user
+DELETE http://localhost:5000/api/profile
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWY0OTA5YjA0ZTJlOTQyNjg4MTkwYWYwIn0sImlhdCI6MTU5ODYyMjEyOCwiZXhwIjoxNTk4OTgyMTI4fQ.t5XxO1sQe5OF-QZNr5ZEQTsnVM5F4QJCqrvDclFJnh4
+
