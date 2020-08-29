@@ -123,3 +123,13 @@ x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3O
 DELETE http://localhost:5000/api/posts/5f4a14fdda8cca4b5c02704b
 Content-Type: application/json
 x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3OWRkNmI2MmUyMDkwNTAzMDdhIn0sImlhdCI6MTU5ODYxNzkxNiwiZXhwIjoxNTk4OTc3OTE2fQ.kK20Z4hf2LOivbhjDnc12OlfqXjHb_vuwnf9FvPDHXQ
+
+#### Like a post
+PUT http://localhost:5000/api/posts/like/5f4a20a55e19662968dbf250
+Content-Type: application/json
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3OWRkNmI2MmUyMDkwNTAzMDdhIn0sImlhdCI6MTU5ODYxNzkxNiwiZXhwIjoxNTk4OTc3OTE2fQ.kK20Z4hf2LOivbhjDnc12OlfqXjHb_vuwnf9FvPDHXQ
+
+#### Like a post
+PUT http://localhost:5000/api/posts/unlike/5f4a20a55e19662968dbf250
+Content-Type: application/json
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3OWRkNmI2MmUyMDkwNTAzMDdhIn0sImlhdCI6MTU5ODYxNzkxNiwiZXhwIjoxNTk4OTc3OTE2fQ.kK20Z4hf2LOivbhjDnc12OlfqXjHb_vuwnf9FvPDHXQ
