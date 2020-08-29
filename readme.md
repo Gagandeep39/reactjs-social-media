@@ -5,6 +5,7 @@
   - [Running the Application](#running-the-application)
   - [Connection](#connection)
   - [Endpoints](#endpoints)
+  - [Scripts](#scripts)
   - [Check Data in server](#check-data-in-server)
 
 ## Packages Used
@@ -45,6 +46,20 @@
 - Auth API - `http://localhost:5000/api/auth`
 - Posts API - `http://localhost:5000/api/posts`
 - Profile API - `http://localhost:5000/api/profile`
+
+## Scripts
+```json
+"scripts": {
+  "start": "node server",
+  "server": "nodemon server",
+  "client": "npm start --prefix client",
+  "dev": "concurrently \"npm run server\" \"npm run client\""
+},
+```
+- Concurrently is a package to allow executing concurrent script
+- server script executes server code
+- client script runs command to launch server
+- dev runs both scripts together
 
 ##  Check Data in server 
 - Mongo Dashboard -> Select your cluster -> Collections
