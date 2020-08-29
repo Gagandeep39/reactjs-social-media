@@ -133,3 +133,17 @@ x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3O
 PUT http://localhost:5000/api/posts/unlike/5f4a20a55e19662968dbf250
 Content-Type: application/json
 x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3OWRkNmI2MmUyMDkwNTAzMDdhIn0sImlhdCI6MTU5ODYxNzkxNiwiZXhwIjoxNTk4OTc3OTE2fQ.kK20Z4hf2LOivbhjDnc12OlfqXjHb_vuwnf9FvPDHXQ
+
+#### Create a comment
+POST http://localhost:5000/api/posts/comment/5f4a20a55e19662968dbf250
+Content-Type: application/json
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3OWRkNmI2MmUyMDkwNTAzMDdhIn0sImlhdCI6MTU5ODYxNzkxNiwiZXhwIjoxNTk4OTc3OTE2fQ.kK20Z4hf2LOivbhjDnc12OlfqXjHb_vuwnf9FvPDHXQ
+
+{
+    "text": "You are gonna be fine"
+}
+
+#### Delete a comment
+DELETE http://localhost:5000/api/posts/comment/5f4a20a55e19662968dbf250/5f4a4be5cfbf6d49d4b3c80f
+Content-Type: application/json
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3OWRkNmI2MmUyMDkwNTAzMDdhIn0sImlhdCI6MTU5ODYxNzkxNiwiZXhwIjoxNTk4OTc3OTE2fQ.kK20Z4hf2LOivbhjDnc12OlfqXjHb_vuwnf9FvPDHXQ
