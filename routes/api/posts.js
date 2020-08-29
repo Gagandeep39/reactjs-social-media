@@ -6,9 +6,9 @@ const Post = require('../../models/Post');
 const Users = require('../../models/Users');
 
 /**
- * @route GET /api/posts
- * @description Test Route
- * @access Create a post
+ * @route POST /api/posts
+ * @description Create a post
+ * @access Private
  */
 router.post(
   '/',
@@ -37,4 +37,62 @@ router.post(
     }
   }
 );
+
+/**
+ * @route GET /api/posts
+ * @description Fetch All Posts
+ * @access Privte
+ */
+router.get('/', auth, async (req, res) => {
+  try {
+    const posts = await Post.find().sort({ date: -1 });
+    res.json(posts);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+/**
+ * @route GET /api/posts/:postId
+ * @description Fetch Post by ID
+ * @access Privte
+ */
+router.get('/:postId', auth, async (req, res) => {
+  try {
+    const posts = await Post.findById(req.params.postId);
+    if (!posts) return res.status(404).json({ msg: 'Post not found' });
+    res.json(posts);
+  } catch (error) {
+    console.log(error.message);
+    if (error.kind === 'ObjectId')
+      return res.status(404).json({ msg: 'Post not found' });
+    res.status(500).send('Server Error');
+  }
+});
+
+/**
+ * @route DELETE /api/posts/:postId
+ * @description Delete Post by ID
+ * @access Privte
+ */
+router.delete('/:postId', auth, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.postId);
+
+    if (!post) return res.status(404).json({ msg: 'Post not found' });
+
+    if (post.user.toString() !== req.user.id)
+      res.status(401).json({ msg: 'User not authorized' });
+
+    await post.remove();
+    res.json({ msg: 'Post removed' });
+  } catch (error) {
+    if (error.kind === 'ObjectId')
+      return res.status(404).json({ msg: 'Post not found' });
+    console.log(error.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 module.exports = router;
