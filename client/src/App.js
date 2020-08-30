@@ -7,6 +7,7 @@ import Register from './components/auth/Register';
 import { Login } from './components/auth/Login';
 import { Provider } from 'react-redux';
 import store from './store';
+import Alert from './components/layouts/Alert';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Navbar />
           <Route exact path='/' component={Landing} />
           <section className='container'>
+            <Alert />
             {/* Works like switch case and nly renders th first matching path */}
             <Switch>
               <Route exact path='/register' component={Register} />
