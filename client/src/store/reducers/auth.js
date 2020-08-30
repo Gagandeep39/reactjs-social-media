@@ -19,7 +19,7 @@ export default (state = initialState, action) => {
         loading: false,
       };
     case actionType.REGISTER_FAIL:
-      localStorage.removeItem('token', payload.token);
+      localStorage.removeItem('token');
       return {
         ...state,
         token: null,
