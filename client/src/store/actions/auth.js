@@ -1,6 +1,7 @@
 import axios from 'axios';
 import * as actionType from '../actions/types';
 import { setAlert } from './alerts';
+import setAuthToken from '../../utils/setAuthToken';
 
 /**
  * @desc Register User
@@ -23,6 +24,24 @@ export const register = ({ name, email, password }) => async (dispatch) => {
     errorArray.forEach((e) => dispatch(setAlert(e.msg, 'danger')));
     dispatch({
       type: actionType.REGISTER_FAIL,
+    });
+  }
+};
+
+/**
+ * @desc Load User data such as name, email, avatar etc using token
+ */
+export const loadUser = () => async (dispatch) => {
+  if (localStorage.token) setAuthToken(localStorage.token);
+  try {
+    const res = await axios.get('/api/auth');
+    dispatch({
+      type: actionType.USER_LOADED,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: actionType.AUTH_ERROR,
     });
   }
 };
