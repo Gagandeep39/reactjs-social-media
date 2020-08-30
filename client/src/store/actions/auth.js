@@ -1,5 +1,6 @@
 import axios from 'axios';
 import * as actionType from '../actions/types';
+import { setAlert } from './alerts';
 
 /**
  * @desc Register User
@@ -18,6 +19,8 @@ export const register = ({ name, email, password }) => async (dispatch) => {
       payload: res.data,
     });
   } catch (error) {
+    const errorArray = error.response.data.errors;
+    errorArray.forEach((e) => dispatch(setAlert(e.msg, 'danger')));
     dispatch({
       type: actionType.REGISTER_FAIL,
     });
