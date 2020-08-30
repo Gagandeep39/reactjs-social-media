@@ -16,6 +16,8 @@ Content-Type: application/json
 
 ### Auth
 GET http://localhost:5000/api/auth
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3OWRkNmI2MmUyMDkwNTAzMDdhIn0sImlhdCI6MTU5ODgyMzE5MiwiZXhwIjoxNTk5MTgzMTkyfQ.2ynnRUBYK2AOZGZjxY2g6DfW--zqj7si0s8CWm3JLv0
+
 
 #### Posts
 GET http://localhost:5000/api/posts
