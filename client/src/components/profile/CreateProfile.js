@@ -1,8 +1,11 @@
 import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link, withRouter } from 'react-router-dom';
+import { createOrUpdateProfile } from '../../store/actions/profile';
+import { createStore } from 'redux';
 
-const CreateProfile = (props) => {
+const CreateProfile = ({ createOrUpdateProfile, history }) => {
   const [formData, setFormData] = useState({
     company: '',
     website: '',
@@ -38,6 +41,11 @@ const CreateProfile = (props) => {
   const onChange = (event) =>
     setFormData({ ...formData, [event.target.name]: event.target.value });
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    createOrUpdateProfile(formData, history);
+  };
+
   return (
     <Fragment>
       <h1 className='large text-primary'>Create Your Profile</h1>
@@ -46,7 +54,7 @@ const CreateProfile = (props) => {
         profile stand out
       </p>
       <small>* = required field</small>
-      <form className='form'>
+      <form className='form' onSubmit={handleSubmit}>
         <div className='form-group'>
           <select name='status' onChange={onChange} value={status}>
             <option value='0'>* Select Professional Status</option>
@@ -212,6 +220,11 @@ const CreateProfile = (props) => {
   );
 };
 
-CreateProfile.propTypes = {};
+CreateProfile.propTypes = {
+  createOrUpdateProfile: PropTypes.func.isRequired,
+};
 
-export default connect()(CreateProfile);
+// with router is used to pass history bject to other component(ere it will be passed to createOrUpdate profile)
+export default connect(null, { createOrUpdateProfile })(
+  withRouter(CreateProfile)
+);

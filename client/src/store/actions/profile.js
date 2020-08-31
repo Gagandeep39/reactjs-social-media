@@ -1,19 +1,53 @@
 import axios from 'axios';
 import * as actionType from '../actions/types';
+import { setAlert } from './alerts';
 
 /**
  * @desc Get current user profile
  */
-export const getCurrentProfile = () => async (disatch) => {
+export const getCurrentProfile = () => async (dispatch) => {
   try {
-    console.log('Heree');
     const res = await axios.get('api/profile/me');
-    disatch({
+    dispatch({
       type: actionType.GET_PROFILE,
       payload: res.data,
     });
   } catch (error) {
-    disatch({
+    dispatch({
+      type: actionType.PROFILE_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+  }
+};
+
+/**
+ * @desc Create or Update profile
+ */
+export const createOrUpdateProfile = (
+  formData,
+  history,
+  edit = false
+) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const res = await axios.post('/api/profile', formData, config);
+    dispatch({
+      type: actionType.GET_PROFILE,
+      payload: res.data,
+    });
+    dispatch(setAlert(edit ? 'Profile Updated' : 'Profile Created', 'success'));
+    if (!edit) history.push('/dashboard');
+  } catch (error) {
+    const errorArray = error.response.data.errors;
+    errorArray.forEach((e) => dispatch(setAlert(e.msg, 'danger')));
+    dispatch({
       type: actionType.PROFILE_ERROR,
       payload: {
         msg: error.response.statusText,
