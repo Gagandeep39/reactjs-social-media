@@ -36,12 +36,7 @@ Content-Type: application/json
 
 #### Fetch Current profile
 GET http://localhost:5000/api/profile/me
-x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3OWRkNmI2MmUyMDkwNTAzMDdhIn0sImlhdCI6MTU5ODYxNzkxNiwiZXhwIjoxNTk4OTc3OTE2fQ.kK20Z4hf2LOivbhjDnc12OlfqXjHb_vuwnf9FvPDHXQ
-
-{
-    "email": "singh.gagandeep3911@gmail.com",
-    "password": "123456"
-}
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWY0Y2FiN2NjZmYzYzY0OTM4NjEwMjk3In0sImlhdCI6MTU5ODg5MTEwNywiZXhwIjoxNTk5MjUxMTA3fQ.RjwzLtTJTq6fITnnoelxG0bRsKFGSoEMy5noLCouRUQ
 
 #### Create a new Profile
 POST http://localhost:5000/api/profile/
