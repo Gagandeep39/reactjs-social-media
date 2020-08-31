@@ -10,6 +10,7 @@ const initialState = {
 export default (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
+    case actionType.LOGIN_SUCCESS:
     case actionType.REGISTER_SUCCESS:
       localStorage.setItem('token', payload.token);
       return {
@@ -18,6 +19,7 @@ export default (state = initialState, action) => {
         isAuthenticated: true,
         loading: false,
       };
+    case actionType.LOGIN_FAIL:
     case actionType.REGISTER_FAIL:
     case actionType.AUTH_ERROR:
       localStorage.removeItem('token');
