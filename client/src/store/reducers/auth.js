@@ -29,6 +29,7 @@ export default (state = initialState, action) => {
         token: null,
         isAuthenticated: null,
         loading: false,
+        user: null
       };
     case actionType.USER_LOADED:
       return {
