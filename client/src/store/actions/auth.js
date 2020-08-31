@@ -72,3 +72,10 @@ export const login = (email, password) => async (dispatch) => {
     dispatch(loadUser());
   }
 };
+
+/**
+ * @desc Logout
+ */
+export const logout = () => async (dispatch) => {
+  dispatch({ type: actionType.LOGOUT });
+};
