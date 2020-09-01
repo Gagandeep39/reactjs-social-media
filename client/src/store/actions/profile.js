@@ -116,3 +116,47 @@ export const addEducation = (formData, history) => async (dispatch) => {
     });
   }
 };
+
+/**
+ * @desc Delete Experience
+ */
+const deleteExperience = (expId) => async (dispatch) => {
+  try {
+    const res = await axios.delete('/api/profile/experience/' + expId);
+    dispatch({
+      action: actionType.UPDATE_PROFILE,
+      payload: res.data,
+    });
+    dispatch(setAlert('Experience Removed', 'success'));
+  } catch (error) {
+    dispatch({
+      type: actionType.PROFILE_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+  }
+};
+
+/**
+ * @desc Delete Experience
+ */
+const deleteEducation = (eduId) => async (dispatch) => {
+  try {
+    const res = await axios.delete('/api/profile/education/' + eduId);
+    dispatch({
+      action: actionType.UPDATE_PROFILE,
+      payload: res.data,
+    });
+    dispatch(setAlert('Education Removed', 'success'));
+  } catch (error) {
+    dispatch({
+      type: actionType.PROFILE_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+  }
+};
