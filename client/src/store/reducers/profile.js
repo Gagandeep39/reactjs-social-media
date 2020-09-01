@@ -13,6 +13,7 @@ export default (state = initialState, action) => {
 
   switch (type) {
     case actionType.GET_PROFILE:
+    case actionType.UPDATE_PROFILE:
       return {
         ...state,
         profile: payload,
