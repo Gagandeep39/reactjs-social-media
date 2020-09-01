@@ -84,12 +84,12 @@ export const logout = () => async (dispatch) => {
 /**
  * @desc Delete account, Experience
  */
-const deleteAccount = (eduId) => async (dispatch) => {
+export const deleteAccount = () => async (dispatch) => {
   if (window.confirm('Delete Account, this cannot be undone')) {
     try {
       await axios.delete('/api/profile');
-      dispatch({ action: actionType.CLEAR_PROFILE });
-      dispatch({ action: actionType.DELETE_ACCOUNT });
+      dispatch({ type: actionType.CLEAR_PROFILE });
+      dispatch({ type: actionType.DELETE_ACCOUNT });
       dispatch(setAlert('Your account has been permanently deleted'));
     } catch (error) {
       dispatch({
