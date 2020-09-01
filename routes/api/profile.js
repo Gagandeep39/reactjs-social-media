@@ -167,12 +167,12 @@ router.put(
     [
       body('title', 'Title Required').not().isEmpty(),
       body('company', 'Company name Required').not().isEmpty(),
-      body('from', 'From date Required').not().isEmpty(),
+      body('from', 'From date Required').isDate(),
     ],
   ],
   async (req, res) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty)
+    if (!errors.isEmpty())
       return res.status(400).send({ errors: errors.array() });
 
     const {
@@ -242,7 +242,7 @@ router.put(
   ],
   async (req, res) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty)
+    if (!errors.isEmpty())
       return res.status(400).send({ errors: errors.array() });
 
     const {
