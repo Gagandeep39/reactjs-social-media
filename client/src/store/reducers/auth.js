@@ -23,13 +23,14 @@ export default (state = initialState, action) => {
     case actionType.REGISTER_FAIL:
     case actionType.AUTH_ERROR:
     case actionType.LOGOUT:
+    case actionType.DELETE_ACCOUNT:
       localStorage.removeItem('token');
       return {
         ...state,
         token: null,
         isAuthenticated: null,
         loading: false,
-        user: null
+        user: null,
       };
     case actionType.USER_LOADED:
       return {
