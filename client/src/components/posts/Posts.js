@@ -3,12 +3,27 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getAllPosts } from '../../store/actions/post';
 import Spinner from '../layouts/Spinner';
+import PostItem from './PostItem';
 
-const Posts = ({ getAllPosts, post: { post, loading } }) => {
+const Posts = ({ getAllPosts, post: { posts, loading } }) => {
   useEffect(() => {
     getAllPosts();
   }, [getAllPosts]);
-  return <Fragment></Fragment>;
+  return loading ? (
+    <Spinner />
+  ) : (
+    <Fragment>
+      <h1 class='large text-primary'>Posts</h1>
+      <p class='lead'>
+        <i class='fas fa-user'></i> Welcome to the community!
+      </p>
+      <div className='posts'>
+        {posts.map((post) => (
+          <PostItem post={post} key={post._id} />
+        ))}
+      </div>
+    </Fragment>
+  );
 };
 
 Posts.propTypes = {
