@@ -7,7 +7,7 @@ import { setAlert } from './alerts';
  */
 export const getCurrentProfile = () => async (dispatch) => {
   try {
-    const res = await axios.get('api/profile/me');
+    const res = await axios.get('/api/profile/me');
     dispatch({
       type: actionType.GET_PROFILE,
       payload: res.data,
@@ -31,7 +31,7 @@ export const getAllProfiles = () => async (dispatch) => {
     type: actionType.CLEAR_PROFILE,
   });
   try {
-    const res = await axios.get('api/profile/');
+    const res = await axios.get('/api/profile/');
     dispatch({
       type: actionType.GET_ALL_PROFILES,
       payload: res.data,
@@ -52,7 +52,8 @@ export const getAllProfiles = () => async (dispatch) => {
  */
 export const getProfileById = (userId) => async (dispatch) => {
   try {
-    const res = await axios.get('api/profile/user/' + userId);
+    console.log(userId);
+    const res = await axios.get('/api/profile/user/' + userId);
     dispatch({
       type: actionType.GET_PROFILE,
       payload: res.data,
@@ -74,7 +75,7 @@ export const getProfileById = (userId) => async (dispatch) => {
 export const getGithubRepositories = (username) => async (dispatch) => {
 
   try {
-    const res = await axios.get('api/profile/github/' + username);
+    const res = await axios.get('/api/profile/github/' + username);
     dispatch({
       type: actionType.GET_ALL_PROFILES,
       payload: res.data,
