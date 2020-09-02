@@ -16,6 +16,13 @@ export default (state = initialState, action) => {
         posts: payload,
         loading: false,
       };
+    case actionType.ADD_POST:
+      console.log(payload);
+      return {
+        ...state,
+        posts: [payload, ...state.posts],
+        loading: false,
+      };
     case actionType.POST_ERROR:
       return {
         ...state,
