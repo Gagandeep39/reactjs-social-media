@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getProfileById } from '../../store/actions/profile';
 import Spinner from '../layouts/Spinner';
+import ProfileTop from './ProfileTop';
 
 function Profile({
   match,
@@ -29,6 +30,10 @@ function Profile({
             auth.user._id === profile.user._id && (
               <Link className='btn btn-dark'>Edit Profile</Link>
             )}
+            
+            <div class="profile-grid my-1">
+              <ProfileTop profile={profile}/>
+            </div>
         </Fragment>
       )}
     </Fragment>
