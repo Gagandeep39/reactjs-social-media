@@ -22,6 +22,18 @@ export default (state = initialState, action) => {
         error: payload,
         loading: false,
       };
+    case actionType.UPDATE_LIKES:
+      return {
+        ...state,
+        /**
+         * Posts array has multiple post with each one associated with Likes
+         * Below logic updates the likes only fr that post that has been updated instead of all posts
+         */
+        posts: state.posts.map((post) =>
+          post._id === payload.postId ? { ...post, likes: payload.likes } : post
+        ),
+        loading: false,
+      };
     default:
       return state;
   }

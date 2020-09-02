@@ -15,10 +15,56 @@ export const getAllPosts = () => async (dispatch) => {
     });
   } catch (error) {
     console.log(error);
-    const errorArray = error.response.data.errors;
-    errorArray.forEach((e) => dispatch(setAlert(e.msg, 'danger')));
     dispatch({
-      type: actionType.REGISTER_FAIL,
+      type: actionType.POST_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+  }
+};
+
+/**
+ * @desc Add likes
+ */
+export const addLike = (postId) => async (dispatch) => {
+  try {
+    const res = await axios.put('/api/posts/like/' + postId);
+    dispatch({
+      type: actionType.UPDATE_LIKES,
+      payload: { postId, likes: res.data },
+    });
+  } catch (error) {
+    console.log(error);
+    dispatch({
+      type: actionType.POST_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+  }
+};
+
+/**
+ * @desc RemoveLike likes
+ */
+export const removeLike = (postId) => async (dispatch) => {
+  try {
+    const res = await axios.put('/api/posts/unlike/' + postId);
+    dispatch({
+      type: actionType.UPDATE_LIKES,
+      payload: { postId, likes: res.data },
+    });
+  } catch (error) {
+    console.log(error);
+    dispatch({
+      type: actionType.POST_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
     });
   }
 };
