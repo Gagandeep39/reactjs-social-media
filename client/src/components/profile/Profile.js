@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { getProfileById } from '../../store/actions/profile';
 import Spinner from '../layouts/Spinner';
 import ProfileTop from './ProfileTop';
+import ProfileAbout from './ProfileAbout';
 
 function Profile({
   match,
@@ -33,6 +34,7 @@ function Profile({
             
             <div class="profile-grid my-1">
               <ProfileTop profile={profile}/>
+              <ProfileAbout profile={profile}/>
             </div>
         </Fragment>
       )}
