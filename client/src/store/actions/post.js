@@ -10,7 +10,7 @@ export const getAllPosts = () => async (dispatch) => {
     const res = await axios.get('/api/posts');
     console.log(res);
     dispatch({
-      type: actionType.GET_POST,
+      type: actionType.GET_POSTS,
       payload: res.data,
     });
   } catch (error) {
@@ -108,6 +108,28 @@ export const createPost = (formData) => async (dispatch) => {
       payload: res.data,
     });
     dispatch(setAlert('Post Created', 'success'));
+  } catch (error) {
+    console.log(error);
+    dispatch({
+      type: actionType.POST_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+  }
+};
+
+/**
+ * @desc Get single post by ID
+ */
+export const getPostById = (postId) => async (dispatch) => {
+  try {
+    const res = await axios.get('/api/posts/' + postId);
+    dispatch({
+      type: actionType.GET_POST,
+      payload: res.data,
+    });
   } catch (error) {
     console.log(error);
     dispatch({

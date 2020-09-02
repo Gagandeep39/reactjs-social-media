@@ -10,10 +10,16 @@ const initialState = {
 export default (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
-    case actionType.GET_POST:
+    case actionType.GET_POSTS:
       return {
         ...state,
         posts: payload,
+        loading: false,
+      };
+    case actionType.GET_POST:
+      return {
+        ...state,
+        post: payload,
         loading: false,
       };
     case actionType.ADD_POST:
