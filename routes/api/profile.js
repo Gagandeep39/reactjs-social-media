@@ -167,7 +167,7 @@ router.put(
     [
       body('title', 'Title Required').not().isEmpty(),
       body('company', 'Company name Required').not().isEmpty(),
-      body('from', 'From date Required').isDate(),
+      body('from', 'From date Required').not().isDate(),
     ],
   ],
   async (req, res) => {
