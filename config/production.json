@@ -1,0 +1,6 @@
+{
+  "mongoURI": "mongodb+srv://gagan:ssj39111@devconnector.phadv.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "iamlonely",
+  "githubClientId": "76d3d784e143816ff3e3",
+  "githubSecret": "dc7c346b3ecb12cbaa0bbebbb545f211d14baa90"
+}
