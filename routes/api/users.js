@@ -3,11 +3,11 @@ const express = require('express');
 // Import Routes
 const router = express.Router();
 // Import Vaidators
-const { validationResult } = require('express-validator')
+const { validationResult } = require('express-validator');
 // Import granvatar
 const gravatar = require('gravatar');
 // Import bycrptm ffor encryption
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
 // Import User model
 const User = require('../../models/Users');
 // Import json web toke
@@ -20,82 +20,58 @@ const validateRegisterInput = require('../../validation/register');
  * @description Test Route, All the routes will be accessed from '/api/users/*'
  * @access Public
  */
-router.post('/', 
-    // Performing Validation using express-validator library
-    validateRegisterInput,
-    // Responsding to request
-    // Async as it rquires databse access hich takes time
-    async (req, res) => {
-        const errors = validationResult(req);
-        // Sending Error message in case of errors
-        if (!errors.isEmpty()) {
-            return res.status(400).json({errors: errors.array()});
-        }
-        console.log(req.body);
+router.post('/', validateRegisterInput, async (req, res) => {
+  const errors = validationResult(req);
+  // Sending Error message in case of errors
+  if (!errors.isEmpty())
+    return res.status(400).json({ errors: errors.array() });
 
-        // Fetch namw email and password 
-        const { name, email, password } = req.body
+  User.findOne({ email: req.body.email }).then((user) => {
+    if (user)
+      return res.status(400).json({ errors: [{ msg: 'User Already Exists' }] });
 
-        try {
+    const avatar = gravatar.url(req.body.email, {
+      r: 'pg', // Rating 'PG' prevent nudity
+      s: '200', // Size 200
+      d: 'mm', // Default image
+    });
 
-            // Different Operations to be performed
-            let user = await User.findOne({ email })
+    const newUser = new User({
+      name: req.body.name,
+      email: req.body.email,
+      avatar,
+      password: req.body.password,
+    });
 
-            // 1. Check if Email Esists
-            // Return is used to prefent further execution
-            if (user) {
-                return res.status(400).json({errors: [
-                    { msg: 'User Already Exists' }
-                ]})
-            }
-
-            // 2. Fetch Gravatae
-            const avatar = gravatar.url(email, {
-                // Rating 'PG' prevent nudity
-                r: 'pg',
-                // Size 200
-                s: '200',
-                // Default image
-                d: 'mm'
-            })
-            user = new User({
-                name,
-                email,
-                avatar,
-                password
-            })
-
-            // 3. Encrypt Password using BCrypt
-            // Number of rounds
-            // Await because it will return a promise
-            // Also further executtion mst not be performed until this is done
-            const salt = await bcrypt.genSalt(10)
-            user.password = await bcrypt.hash(password, salt);
-            // Save user in database
-            await user.save();
-
-            // 4. Generate a JWT Token
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(newUser.password, salt, (err, hash) => {
+        if (err) throw err;
+        newUser.password = hash;
+        newUser
+          .save()
+          .then((user) => {
             const payload = {
-                user: {
-                    // Mongo uses _id but mongoose provide an abstraction for that
-                    id: user.id
-                }
-            }
+              user: { id: user.id },
+            };
             // Returns a token
-            jwt.sign(payload, keys.secretOrKey, 
-            {expiresIn: 360000},    // Expiration
-            (err, token) => {
-                if(err) throw err;
-                res.json({token})   // Sucessfullyr eturn tokenif no error
-            })
-            // In progress 
-            // res.send('Users registered');
-        } catch (error) {
-            console.error(error);
+            jwt.sign(
+              payload,
+              keys.secretOrKey,
+              { expiresIn: 360000 }, // Expiration
+              (err, token) => {
+                if (err) throw err;
+                res.json({ token: 'Bearer ' + token }); // Sucessfullyr eturn tokenif no error
+              }
+            );
+          })
+          .catch((err) => {
+            console.log(err);
             res.status(500).send('Server Error');
-        }
-    }
-);
+          });
+      });
+    });
+  });
+});
 
 module.exports = router;
 // NOTE: If there are multiple 'res' statwement then all of them must have 'return' before them to prevent further execution
