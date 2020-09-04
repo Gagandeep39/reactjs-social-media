@@ -1,8 +1,7 @@
-// Create a simple express server
 const express = require('express');
-// Initialize the app variable with express
 const app = express();
-
+const morgan = require('morgan')
+require('dotenv').config()
 // Creating connection logic instance
 const connectDB = require('./config/db');
 // Execute the Connection
@@ -11,6 +10,7 @@ connectDB();
 // Initialize middileware
 // Allows accessing request body
 app.use(express.json({ extended: false }))
+app.use(morgan("dev"));
 
 // Add Endpoints
 // app.get('/', (req, res) => res.send('API Running'));
