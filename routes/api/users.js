@@ -14,6 +14,8 @@ const User = require('../../models/Users');
 const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
 const validateRegisterInput = require('../../validation/register');
+const validateLoginInput = require('../../validation/login');
+const passport = require('passport');
 
 /**
  * @route GET /api/users
@@ -72,6 +74,72 @@ router.post('/', validateRegisterInput, async (req, res) => {
     });
   });
 });
+
+/**
+ * @route GET /api/auth
+ * @description Authenticate Usrer and get token
+ * @access Public
+ */
+router.post('/login', validateLoginInput, async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty())
+    return res.status(400).json({ errors: errors.array() });
+
+  User.findOne({ email: req.body.email })
+    .then((user) => {
+      if (!user)
+        return res
+          .status(400)
+          .json({ errors: [{ msg: 'Invalid credentials' }] });
+
+      bcrypt.compare(req.body.password, user.password).then((isMatch) => {
+        if (!isMatch)
+          return res
+            .status(400)
+            .json({ errors: [{ msg: 'Invalid credentials' }] });
+
+        const payload = {
+          user: { id: user.id },
+        };
+        // Returns a token
+        jwt.sign(
+          payload,
+          keys.secretOrKey,
+          { expiresIn: 360000 }, // Expiration
+          (err, token) => {
+            if (err) throw err;
+            res.json({
+              success: true,
+              token: 'Bearer ' + token,
+            });
+          }
+        );
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send('Server Error');
+    });
+});
+
+/**
+ * @route GET /api/auth
+ * @description Send user data (Protected route)
+ * @access Public
+ */
+router.get(
+  '/',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    try {
+      const user = await User.findById(req.user.id).select('-password');
+      res.json(user);
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).send('Server error');
+    }
+  }
+);
 
 module.exports = router;
 // NOTE: If there are multiple 'res' statwement then all of them must have 'return' before them to prevent further execution
