@@ -2,18 +2,19 @@ const express = require('express');
 const config = require('config');
 const axios = require('axios');
 const router = express.Router();
-const auth = require('../../middleware/auth');
 const User = require('../../models/Users');
 const Profile = require('../../models/Profile');
 const Post = require('../../models/Post');
+const passport = require('passport');
 const { body, validationResult } = require('express-validator');
+const authenticate = () => passport.authenticate('jwt', { session: false });
 
 /**
  * @route GET /api/profile/me
  * @description Get Current user profile
  * @access Private
  */
-router.get('/me', auth, async (req, res) => {
+router.get('/me', authenticate(), async (req, res) => {
   try {
     const profile = await Profile.findOne({
       user: req.user.id,
@@ -35,7 +36,7 @@ router.get('/me', auth, async (req, res) => {
 router.post(
   '/',
   [
-    auth,
+    authenticate(),
     [
       body('status', 'Status is required').not().isEmpty(),
       body('skills', 'Skills are required').not().isEmpty(),
@@ -142,7 +143,7 @@ router.get('/user/:userId', async (req, res) => {
  * @description Delete profile, users, post
  * @access Private
  */
-router.delete('/', auth, async (req, res) => {
+router.delete('/', authenticate(), async (req, res) => {
   try {
     await Post.deleteMany({ user: req.user.id })
     await Profile.findOneAndRemove({ user: req.user.id });
@@ -163,7 +164,7 @@ router.delete('/', auth, async (req, res) => {
 router.put(
   '/experience',
   [
-    auth,
+    authenticate(),
     [
       body('title', 'Title Required').not().isEmpty(),
       body('company', 'Company name Required').not().isEmpty(),
@@ -213,7 +214,7 @@ router.put(
  * @description Delete experience
  * @access Private
  */
-router.delete('/experience/:expId', auth, async (req, res) => {
+router.delete('/experience/:expId', authenticate(), async (req, res) => {
   const profile = await Profile.findOne({ user: req.user.id });
   const removeIndex = profile.experience
     .map((item) => item.id)
@@ -232,7 +233,7 @@ router.delete('/experience/:expId', auth, async (req, res) => {
 router.put(
   '/education',
   [
-    auth,
+    authenticate(),
     [
       body('school', 'Institute Required').not().isEmpty(),
       body('degree', 'Degree name Required').not().isEmpty(),
@@ -285,7 +286,7 @@ router.put(
  * @description Delete education
  * @access Private
  */
-router.delete('/education/:eduId', auth, async (req, res) => {
+router.delete('/education/:eduId', authenticate(), async (req, res) => {
   const profile = await Profile.findOne({ user: req.user.id });
   const removeIndex = profile.education
     .map((item) => item.id)

@@ -3,7 +3,7 @@ const app = express();
 const morgan = require('morgan')
 const passport = require('passport')
 require('dotenv').config()
-require('./config/passport');
+require('./config/passport')(passport);
 
 // Creating connection logic instance
 const connectDB = require('./config/db');

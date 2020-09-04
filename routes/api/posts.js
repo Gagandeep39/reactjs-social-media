@@ -4,6 +4,8 @@ const { body, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
 const Post = require('../../models/Post');
 const Users = require('../../models/Users');
+const passport = require('passport');
+const authenticate = () => passport.authenticate('jwt', { session: false });
 
 /**
  * @route POST /api/posts
@@ -12,7 +14,7 @@ const Users = require('../../models/Users');
  */
 router.post(
   '/',
-  [auth, [body('text', 'Text is required').not().isEmpty()]],
+  [authenticate(), [body('text', 'Text is required').not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -43,22 +45,26 @@ router.post(
  * @description Fetch All Posts
  * @access Privte
  */
-router.get('/', auth, async (req, res) => {
-  try {
-    const posts = await Post.find().sort({ date: -1 });
-    res.json(posts);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).send('Server Error');
+router.get(
+  '/',
+  authenticate(),
+  async (req, res) => {
+    try {
+      const posts = await Post.find().sort({ date: -1 });
+      res.json(posts);
+    } catch (error) {
+      console.log(error.message);
+      res.status(500).send('Server Error');
+    }
   }
-});
+);
 
 /**
  * @route GET /api/posts/:postId
  * @description Fetch Post by ID
  * @access Privte
  */
-router.get('/:postId', auth, async (req, res) => {
+router.get('/:postId', authenticate(), async (req, res) => {
   try {
     const posts = await Post.findById(req.params.postId);
     if (!posts) return res.status(404).json({ msg: 'Post not found' });
@@ -76,7 +82,7 @@ router.get('/:postId', auth, async (req, res) => {
  * @description Delete Post by ID
  * @access Privte
  */
-router.delete('/:postId', auth, async (req, res) => {
+router.delete('/:postId', authenticate(), async (req, res) => {
   try {
     const post = await Post.findById(req.params.postId);
 
@@ -100,7 +106,7 @@ router.delete('/:postId', auth, async (req, res) => {
  * @description Like a post
  * @access Privte
  */
-router.put('/like/:id', auth, async (req, res) => {
+router.put('/like/:id', authenticate(), async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     console.log(post.likes);
@@ -125,7 +131,7 @@ router.put('/like/:id', auth, async (req, res) => {
  * @description Unlike a post
  * @access Privte
  */
-router.put('/unlike/:id', auth, async (req, res) => {
+router.put('/unlike/:id', authenticate(), async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     console.log(post.likes);
@@ -155,7 +161,7 @@ router.put('/unlike/:id', auth, async (req, res) => {
  */
 router.post(
   '/comment/:id',
-  [auth, [body('text', 'Text field cannot be empty').not().isEmpty()]],
+  [authenticate(), [body('text', 'Text field cannot be empty').not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -188,7 +194,7 @@ router.post(
  * @description Delete a comment
  * @access Privte
  */
-router.delete('/comment/:id/:commentId', auth, async (req, res) => {
+router.delete('/comment/:id/:commentId', authenticate(), async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     const comment = post.comments.find(
