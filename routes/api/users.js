@@ -3,7 +3,7 @@ const express = require('express');
 // Import Routes
 const router = express.Router();
 // Import Vaidators
-const { body, validationResult } = require('express-validator')
+const { validationResult } = require('express-validator')
 // Import granvatar
 const gravatar = require('gravatar');
 // Import bycrptm ffor encryption
@@ -14,6 +14,7 @@ const User = require('../../models/Users');
 const jwt = require('jsonwebtoken');
 // import jwt secret from config
 const config = require('config')
+const validateRegisterInput = require('../../validation/register');
 
 /**
  * @route GET /api/users
@@ -22,16 +23,7 @@ const config = require('config')
  */
 router.post('/', 
     // Performing Validation using express-validator library
-    [
-        // username must be an email
-        body('name', 'Cannot be empty')
-            .not().
-            isEmpty(),
-        body('email', 'Enter a valid Email address')
-            .isEmail(),
-        body('password', 'Password must have minimum 6 characters')
-            .isLength({min: 6})
-    ],
+    validateRegisterInput,
     // Responsding to request
     // Async as it rquires databse access hich takes time
     async (req, res) => {
