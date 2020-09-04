@@ -6,6 +6,7 @@ const User = require('../../models/Users');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const bcrypt = require('bcryptjs');
+const validateLoginInput = require('../../validation/login');
 
 /**
  * @route GET /api/auth
@@ -29,12 +30,7 @@ router.get('/', authMiddleware, async (req, res) => {
  * @access Public
  */
 router.post(
-  '/',
-  [
-    body('email', 'Enter a valid Email address').isEmail(),
-    body('password', 'Password is required').exists(),
-  ],
-  async (req, res) => {
+  '/', validateLoginInput, async (req, res) => {
     const errors = validationResult(req);
     // Sending Error message in case of errors
     if (!errors.isEmpty()) {
@@ -72,7 +68,10 @@ router.post(
         { expiresIn: 360000 }, // Expiration
         (err, token) => {
           if (err) throw err;
-          res.json({ token });
+          res.json({
+            success: true,
+            token: 'Bearer ' + token
+          });
         }
       );
     } catch (error) {
