@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect, useCallback } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
@@ -47,9 +47,7 @@ const EditProfile = ({
 
   useEffect(() => {
     getCurrentProfile();
-  }, [getCurrentProfile, loading]);
 
-  useCallback(() => {
     setFormData({
       company: loading || !profile.company ? '' : profile.company,
       website: loading || !profile.website ? '' : profile.website,
@@ -65,7 +63,7 @@ const EditProfile = ({
       youtube: loading || !profile.social ? '' : profile.social.youtube,
       instagram: loading || !profile.social ? '' : profile.social.instagram,
     });
-  }, [loading, profile]);
+  }, [getCurrentProfile, loading]);
 
   const onChange = (event) =>
     setFormData({ ...formData, [event.target.name]: event.target.value });
