@@ -12,8 +12,7 @@ const bcrypt = require('bcryptjs')
 const User = require('../../models/Users');
 // Import json web toke
 const jwt = require('jsonwebtoken');
-// import jwt secret from config
-const config = require('config')
+const keys = require('../../config/keys');
 const validateRegisterInput = require('../../validation/register');
 
 /**
@@ -83,7 +82,7 @@ router.post('/',
                 }
             }
             // Returns a token
-            jwt.sign(payload, config.get('jwtSecret'), 
+            jwt.sign(payload, keys.secretOrKey, 
             {expiresIn: 360000},    // Expiration
             (err, token) => {
                 if(err) throw err;
