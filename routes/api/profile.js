@@ -5,7 +5,10 @@ const User = require('../../models/Users');
 const Profile = require('../../models/Profile');
 const Post = require('../../models/Post');
 const passport = require('passport');
-const { body, validationResult } = require('express-validator');
+const { validationResult } = require('express-validator');
+const validateProfileInput = require('../../validation/profile');
+const validateExperienceInput = require('../../validation/experience');
+const validateEducationInput = require('../../validation/education');
 const authenticate = () => passport.authenticate('jwt', { session: false });
 
 /**
@@ -36,10 +39,7 @@ router.post(
   '/',
   [
     authenticate(),
-    [
-      body('status', 'Status is required').not().isEmpty(),
-      body('skills', 'Skills are required').not().isEmpty(),
-    ],
+    validateProfileInput,
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -164,11 +164,7 @@ router.put(
   '/experience',
   [
     authenticate(),
-    [
-      body('title', 'Title Required').not().isEmpty(),
-      body('company', 'Company name Required').not().isEmpty(),
-      body('from', 'From date Required').not().isDate(),
-    ],
+    validateExperienceInput,
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -233,12 +229,7 @@ router.put(
   '/education',
   [
     authenticate(),
-    [
-      body('school', 'Institute Required').not().isEmpty(),
-      body('degree', 'Degree name Required').not().isEmpty(),
-      body('fieldofstudy', 'Field of study Required').not().isEmpty(),
-      body('from', 'From date Required').not().isEmpty(),
-    ],
+    validateEducationInput,
   ],
   async (req, res) => {
     const errors = validationResult(req);

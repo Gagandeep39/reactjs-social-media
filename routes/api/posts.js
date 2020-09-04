@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { body, validationResult } = require('express-validator');
+const { validationResult } = require('express-validator');
+const validatePostInput = require('../../validation/post');
 const Post = require('../../models/Post');
 const Users = require('../../models/Users');
 const passport = require('passport');
@@ -13,7 +14,7 @@ const authenticate = () => passport.authenticate('jwt', { session: false });
  */
 router.post(
   '/',
-  [authenticate(), [body('text', 'Text is required').not().isEmpty()]],
+  [authenticate(), validatePostInput],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -160,7 +161,7 @@ router.put('/unlike/:id', authenticate(), async (req, res) => {
  */
 router.post(
   '/comment/:id',
-  [authenticate(), [body('text', 'Text field cannot be empty').not().isEmpty()]],
+  [authenticate(), validatePostInput],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
