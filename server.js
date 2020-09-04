@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan')
+const passport = require('passport')
 require('dotenv').config()
 // Creating connection logic instance
 const connectDB = require('./config/db');
@@ -16,6 +17,8 @@ app.use(morgan("dev"));
 // app.get('/', (req, res) => res.send('API Running'));
 
 // Define Routes
+app.use(passport.initialize());
+require('./config/passport')(passport);
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/profile', require('./routes/api/profile'));
 app.use('/api/posts', require('./routes/api/posts'));
