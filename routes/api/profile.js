@@ -16,64 +16,51 @@ const authenticate = () => passport.authenticate('jwt', { session: false });
  *      properties:
  *        school:
  *          type: "string"
+ *          example: Random Engineering Institute
  *        degree:
  *          type: "string"
+ *          example: B.E
  *        fieldofstudy:
  *          type: "string"
+ *          example: Computer Science
  *        from:
  *          type: "string"
+ *          example: 2016
  *        to:
  *          type: "string"
+ *          example: 2020
  *        location:
  *          type: "string"
+ *          example: Earth
  *        current:
  *          type: "string"
+ *          example: false
  *        description:
  *          type: "string"
+ *          example: Its just an education entry
  *    Experience:
  *      type: "object"
  *      properties:
  *        title:
  *          type: "string"
+ *          example: Senior Developer
  *        company:
  *          type: "string"
+ *          example: Random Company
  *        from:
  *          type: "string"
+ *          example: 12-12-2019
  *        to:
  *          type: "string"
  *        location:
  *          type: "string"
+ *          example: Somewhere on Earth
  *        current:
  *          type: "string"
+ *          example: true
  *        description:
  *          type: "string"
- *    Profile:
- *      type: "object"
- *      properties:
- *        company:
- *          type: "string"
- *        website:
- *          type: "string"
- *        location:
- *          type: "string"
- *        bio:
- *          type: "string"
- *        status:
- *          type: "string"
- *        githubusername:
- *          type: "string"
- *        skills:
- *          type: "string"
- *        youtube:
- *          type: "string"
- *        facebook:
- *          type: "string"
- *        twitter:
- *          type: "string"
- *        instagram:
- *          type: "string"
- *        linkedin:
- *          type: "string"
+ *          example: Just another boring Job, nothing special
  *    
  */
 
@@ -121,7 +108,7 @@ router.get('/me', authenticate(), profileController.fetchCurrentUser);
  *         name: body
  *         description: Profile object
  *         schema:
- *           $ref: "#/definitions/Profile"
+ *           $ref: "#/definitions/ProfileReq"
  *     responses:
  *       200:
  *         description: successful operation
@@ -175,7 +162,12 @@ router.get('/', profileController.fetchAllProfiles);
  *      - bearerAuth: []
  *     produces:
  *       - application/json
- *     parameters: []
+ *     parameters:
+ *     - name: "userId"
+ *       in: "path"
+ *       description: "ID of User whose profile to return"
+ *       required: true
+ *       type: "string"
  *     responses:
  *       200:
  *         description: successful operation
@@ -259,7 +251,12 @@ router.put(
  *      - bearerAuth: []
  *     produces:
  *       - application/json
- *     parameters: []
+ *     parameters:
+ *     - name: "expId"
+ *       in: "path"
+ *       description: "ID of experience to delete"
+ *       required: true
+ *       type: "string"
  *     responses:
  *       200:
  *         description: successful operation
@@ -324,7 +321,12 @@ router.put(
  *      - bearerAuth: []
  *     produces:
  *       - application/json
- *     parameters: []
+ *     parameters:
+ *     - name: "eduId"
+ *       in: "path"
+ *       description: "ID of education entry to delete"
+ *       required: true
+ *       type: "string"
  *     responses:
  *       200:
  *         description: successful operation
@@ -352,7 +354,12 @@ router.delete(
  *     description: Fetch github repositories using github username
  *     produces:
  *       - application/json
- *     parameters: []
+ *     parameters:
+ *     - name: "username"
+ *       in: "path"
+ *       description: "username of user whose repositories are to be fetched"
+ *       required: true
+ *       type: "string"
  *     responses:
  *       200:
  *         description: successful operation

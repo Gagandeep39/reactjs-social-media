@@ -94,7 +94,12 @@ router.get('/', authenticate(), postsController.fetchAllPosts);
  *      - bearerAuth: []
  *     produces:
  *       - application/json
- *     parameters: []
+ *     parameters:
+ *     - name: "postId"
+ *       in: "path"
+ *       description: "Fetch Post by ID"
+ *       required: true
+ *       type: "string"
  *     responses:
  *       200:
  *         description: successful operation
@@ -120,7 +125,12 @@ router.get('/:postId', authenticate(), postsController.fetchPostById);
  *      - bearerAuth: []
  *     produces:
  *       - application/json
- *     parameters: []
+ *     parameters:
+ *     - name: "postId"
+ *       in: "path"
+ *       description: "Delete post by ID"
+ *       required: true
+ *       type: "string"
  *     responses:
  *       200:
  *         description: successful operation
@@ -136,7 +146,7 @@ router.delete('/:postId', authenticate(), postsController.deletePostById);
 /**
  * @swagger
  *
- * /api/posts/like/{postId}:
+ * /api/posts/like/{id}:
  *   put:
  *     tags:
  *       - Posts
@@ -146,7 +156,12 @@ router.delete('/:postId', authenticate(), postsController.deletePostById);
  *      - bearerAuth: []
  *     produces:
  *       - application/json
- *     parameters: []
+ *     parameters:
+ *     - name: "id"
+ *       in: "path"
+ *       description: "Add like using post ID"
+ *       required: true
+ *       type: "string"
  *     responses:
  *       200:
  *         description: successful operation
@@ -162,7 +177,7 @@ router.put('/like/:id', authenticate(), postsController.likePost);
 /**
  * @swagger
  *
- * /api/posts/like/{postId}:
+ * /api/posts/unlike/{id}:
  *   put:
  *     tags:
  *       - Posts
@@ -172,7 +187,12 @@ router.put('/like/:id', authenticate(), postsController.likePost);
  *      - bearerAuth: []
  *     produces:
  *       - application/json
- *     parameters: []
+ *     parameters:
+ *     - name: "id"
+ *       in: "path"
+ *       description: "Unlike a liked post based on post ID"
+ *       required: true
+ *       type: "string"
  *     responses:
  *       200:
  *         description: successful operation
@@ -204,6 +224,11 @@ router.put('/unlike/:id', authenticate(), postsController.unlikePost);
  *         description: Comment object
  *         schema:
  *           $ref: "#/definitions/Comment"
+ *       - name: "id"
+ *         in: "path"
+ *         description: "ID of post on which comment is to be created"
+ *         required: true
+ *         type: "string"
  *     responses:
  *       200:
  *         description: successful operation
@@ -233,7 +258,17 @@ router.post(
  *      - bearerAuth: []
  *     produces:
  *       - application/json
- *     parameters: []
+ *     parameters:
+ *     - name: "id"
+ *       in: "path"
+ *       description: "ID of Post"
+ *       required: true
+ *       type: "string"
+ *     - name: "commentId"
+ *       in: "path"
+ *       description: "ID of Comment to be deleted"
+ *       required: true
+ *       type: "string"
  *     responses:
  *       200:
  *         description: successful operation
