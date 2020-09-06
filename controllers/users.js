@@ -1,5 +1,3 @@
-// Import Vaidators
-const { validationResult } = require('express-validator');
 // Import granvatar
 const gravatar = require('gravatar');
 // Import bycrptm ffor encryption
@@ -9,16 +7,19 @@ const User = require('../models/Users');
 // Import json web toke
 const jwt = require('jsonwebtoken');
 const keys = require('../config/keys');
+const validateRegisterInput = require('../validation/register');
+const validateLoginInput = require('../validation/login');
 
 exports.registerUser = async (req, res) => {
-  const errors = validationResult(req);
+  const { errors, isValid } = validateRegisterInput(req.body);
   // Sending Error message in case of errors
-  if (!errors.isEmpty())
-    return res.status(400).json({ errors: errors.array() });
+  if (!isValid) return res.status(400).json(errors);
 
   User.findOne({ email: req.body.email }).then((user) => {
-    if (user)
-      return res.status(400).json({ errors: [{ msg: 'User Already Exists' }] });
+    if (user) {
+      errors.email = 'Email already exists';
+      return res.status(400).json(errors);
+    }
 
     const avatar = gravatar.url(req.body.email, {
       r: 'pg', // Rating 'PG' prevent nudity
@@ -64,22 +65,22 @@ exports.registerUser = async (req, res) => {
 };
 
 exports.loginUser = async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty())
-    return res.status(400).json({ errors: errors.array() });
+  const { errors, isValid } = validateLoginInput(req.body);
+
+  if (!isValid) return res.status(400).json(errors);
 
   User.findOne({ email: req.body.email })
     .then((user) => {
-      if (!user)
-        return res
-          .status(400)
-          .json({ errors: [{ msg: 'Invalid credentials' }] });
+      if (!user) {
+        errors.email = 'User not found';
+        return res.status(404).json(errors);
+      }
 
       bcrypt.compare(req.body.password, user.password).then((isMatch) => {
-        if (!isMatch)
-          return res
-            .status(400)
-            .json({ errors: [{ msg: 'Invalid credentials' }] });
+        if (!isMatch) {
+          errors.password = 'Password incorrect';
+          return res.status(400).json(errors);
+        }
 
         const payload = {
           user: { id: user.id },
