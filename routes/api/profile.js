@@ -8,116 +8,14 @@ const profileController = require('../../controllers/profile');
 const authenticate = () => passport.authenticate('jwt', { session: false });
 
 /**
- *  @swagger
- *
- *  definitions:
- *    Education:
- *      type: "object"
- *      properties:
- *        school:
- *          type: "string"
- *          example: Random Engineering Institute
- *        degree:
- *          type: "string"
- *          example: B.E
- *        fieldofstudy:
- *          type: "string"
- *          example: Computer Science
- *        from:
- *          type: "string"
- *          example: 2016
- *        to:
- *          type: "string"
- *          example: 2020
- *        location:
- *          type: "string"
- *          example: Earth
- *        current:
- *          type: "string"
- *          example: false
- *        description:
- *          type: "string"
- *          example: Its just an education entry
- *    Experience:
- *      type: "object"
- *      properties:
- *        title:
- *          type: "string"
- *          example: Senior Developer
- *        company:
- *          type: "string"
- *          example: Random Company
- *        from:
- *          type: "string"
- *          example: 12-12-2019
- *        to:
- *          type: "string"
- *        location:
- *          type: "string"
- *          example: Somewhere on Earth
- *        current:
- *          type: "string"
- *          example: true
- *        description:
- *          type: "string"
- *          example: Just another boring Job, nothing special
- *    
- */
-
-/**
- * @swagger
- *
- * /api/profile/me:
- *   get:
- *     tags:
- *       - Profile
- *     summary: Fetch User profile
- *     description: Fetches user's profile, education, experience
- *     security:
- *      - bearerAuth: []
- *     produces:
- *       - application/json
- *     parameters: []
- *     responses:
- *       200:
- *         description: successful operation
- *       400:
- *         description: Bad Request
- *       500:
- *         description: Internal Server Error
- *       401:
- *         $ref: '#/responses/UnauthorizedError'
+ * @route GET /api/profile/me
+ * @description Fetch User Profile
  */
 router.get('/me', authenticate(), profileController.fetchCurrentUser);
 
 /**
- * @swagger
- *
- * /api/profile:
- *   post:
- *     tags:
- *       - Profile
- *     summary: Create Profile
- *     description: Create a user profile
- *     security:
- *      - bearerAuth: []
- *     produces:
- *       - application/json
- *     parameters:
- *       - in: body
- *         name: body
- *         description: Profile object
- *         schema:
- *           $ref: "#/definitions/ProfileReq"
- *     responses:
- *       200:
- *         description: successful operation
- *       400:
- *         description: Bad Request
- *       401:
- *         $ref: '#/responses/UnauthorizedError'
- *       500:
- *         description: Internal Server Error
+ * @route POST /api/profile
+ * @description Create/ Update Profile
  */
 router.post(
   '/',
@@ -126,111 +24,26 @@ router.post(
 );
 
 /**
- * @swagger
- *
- * /api/profile:
- *   get:
- *     tags:
- *       - Profile
- *     summary: Fetch all profiles
- *     description: Fetches all profiless
- *     produces:
- *       - application/json
- *     parameters: []
- *     responses:
- *       200:
- *         description: successful operation
- *       400:
- *         description: Bad Request
- *       500:
- *         description: Internal Server Error
- *       401:
- *         $ref: '#/responses/UnauthorizedError'
+ * @route GET /api/profile
+ * @description Fetch All profiles
  */
 router.get('/', profileController.fetchAllProfiles);
 
 /**
- * @swagger
- *
- * /api/profile/user/{userId}:
- *   get:
- *     tags:
- *       - Profile
- *     summary: Fetch profile by ID
- *     description: Fetches profile of a user whose id is passed as parameter
- *     security:
- *      - bearerAuth: []
- *     produces:
- *       - application/json
- *     parameters:
- *     - name: "userId"
- *       in: "path"
- *       description: "ID of User whose profile to return"
- *       required: true
- *       type: "string"
- *     responses:
- *       200:
- *         description: successful operation
- *       400:
- *         description: Bad Request
- *       500:
- *         description: Internal Server Error
+ * @route GET /api/profile/user/:userId
+ * @description Fetch Profile By ID
  */
 router.get('/user/:userId', profileController.fetchProfileById);
 
 /**
- * @swagger
- *
- * /api/profile:
- *   delete:
- *     tags:
- *       - Profile
- *     summary: Delete profile
- *     description: Delete profile of the user with the help of token
- *     security:
- *      - bearerAuth: []
- *     produces:
- *       - application/json
- *     parameters: []
- *     responses:
- *       200:
- *         description: successful operation
- *       400:
- *         description: Bad Request
- *       500:
- *         description: Internal Server Error
+ * @route DELETE /api/profile
+ * @description Delete Profile
  */
 router.delete('/', authenticate(), profileController.deleteProfile);
 
 /**
- * @swagger
- *
- * /api/profile/experience:
- *   put:
- *     tags:
- *       - Profile
- *     summary: Add new experience of the user
- *     description: Creates a new entry of work experience
- *     security:
- *      - bearerAuth: []
- *     produces:
- *       - application/json
- *     parameters: 
- *       - in: body
- *         name: body
- *         description: Work experience object
- *         required: true
- *         schema:
- *           $ref: "#/definitions/Experience"
- *     responses:
- *       200:
- *         description: successful operation
- *       400:
- *         description: Bad Request
- *       500:
- *         description: Internal Server Error
- *       401:
- *         $ref: '#/responses/UnauthorizedError'
+ * @route PUT /api/profile/experience
+ * @description Add new experience entry
  */
 router.put(
   '/experience',
@@ -239,33 +52,8 @@ router.put(
 );
 
 /**
- * @swagger
- *
- * /api/profile/experience/{expId}:
- *   delete:
- *     tags:
- *       - Profile
- *     summary: Delete Experience
- *     description: Delete expreience of user with the help of ID passed as param
- *     security:
- *      - bearerAuth: []
- *     produces:
- *       - application/json
- *     parameters:
- *     - name: "expId"
- *       in: "path"
- *       description: "ID of experience to delete"
- *       required: true
- *       type: "string"
- *     responses:
- *       200:
- *         description: successful operation
- *       400:
- *         description: Bad Request
- *       500:
- *         description: Internal Server Error
- *       401:
- *         $ref: '#/responses/UnauthorizedError'
+ * @route DELETE /api/profile/experience/:expId
+ * @description Delete experieence by ID
  */
 router.delete(
   '/experience/:expId',
@@ -274,33 +62,8 @@ router.delete(
 );
 
 /**
- * @swagger
- *
- * /api/profile/education:
- *   put:
- *     tags:
- *       - Profile
- *     summary: Add new education details
- *     description: Delete profile of the user with the help of token
- *     security:
- *      - bearerAuth: []
- *     produces:
- *       - application/json
- *     parameters:
- *       - in: body
- *         name: body
- *         description: Profile object
- *         schema:
- *           $ref: "#/definitions/Education"
- *     responses:
- *       200:
- *         description: successful operation
- *       400:
- *         description: Bad Request
- *       500:
- *         description: Internal Server Error
- *       401:
- *         $ref: '#/responses/UnauthorizedError'
+ * @route PUT /api/profile/education
+ * @description Add new education entry
  */
 router.put(
   '/education',
@@ -309,33 +72,8 @@ router.put(
 );
 
 /**
- * @swagger
- *
- * /api/profile/education/{eduId}:
- *   delete:
- *     tags:
- *       - Profile
- *     summary: Delete Education
- *     description: Delete education details of user with the help of ID passed as param
- *     security:
- *      - bearerAuth: []
- *     produces:
- *       - application/json
- *     parameters:
- *     - name: "eduId"
- *       in: "path"
- *       description: "ID of education entry to delete"
- *       required: true
- *       type: "string"
- *     responses:
- *       200:
- *         description: successful operation
- *       400:
- *         description: Bad Request
- *       500:
- *         description: Internal Server Error
- *       401:
- *         $ref: '#/responses/UnauthorizedError'
+ * @route DELETE /api/profile/education/:eduId
+ * @description Delete education by ID
  */
 router.delete(
   '/education/:eduId',
@@ -344,29 +82,8 @@ router.delete(
 );
 
 /**
- * @swagger
- *
- * /api/profile/github/{username}:
- *   get:
- *     tags:
- *       - Profile
- *     summary: Fetch Github repositories
- *     description: Fetch github repositories using github username
- *     produces:
- *       - application/json
- *     parameters:
- *     - name: "username"
- *       in: "path"
- *       description: "username of user whose repositories are to be fetched"
- *       required: true
- *       type: "string"
- *     responses:
- *       200:
- *         description: successful operation
- *       400:
- *         description: Bad Request
- *       500:
- *         description: Internal Server Error
+ * @route GET /api/profile/github/:username
+ * @description Fetch github info by username
  */
 router.get('/github/:username', profileController.getUserRepositories);
 
