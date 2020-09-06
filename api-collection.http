@@ -5,18 +5,18 @@ GET http://localhost:5000
 GET http://localhost:5000/api/users
 
 ### Test body of request
-POST http://localhost:5000/api/users
+POST http://localhost:5000/api/users/register
 Content-Type: application/json
 
 {
-    "name": "Gagandeep Singh",
-    "email": "singh.gagandeep3911@gmail.com",
+    "name": "Test Validation",
+    "email": "test@validations.com",
     "password": "123456"
 }
 
 ### Auth
-GET http://localhost:5000/api/auth
-x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3OWRkNmI2MmUyMDkwNTAzMDdhIn0sImlhdCI6MTU5ODgyMzE5MiwiZXhwIjoxNTk5MTgzMTkyfQ.2ynnRUBYK2AOZGZjxY2g6DfW--zqj7si0s8CWm3JLv0
+GET http://localhost:5000/api/users
+Authorization: [Generate Token by logging In]
 
 
 #### Posts
@@ -26,7 +26,7 @@ GET http://localhost:5000/api/posts
 GET http://localhost:5000/api/profile
 
 #### Generate a token
-POST http://localhost:5000/api/auth
+POST http://localhost:5000/api/users/login
 Content-Type: application/json
 
 {
@@ -36,12 +36,12 @@ Content-Type: application/json
 
 #### Fetch Current profile
 GET http://localhost:5000/api/profile/me
-x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWY0Y2FiN2NjZmYzYzY0OTM4NjEwMjk3In0sImlhdCI6MTU5ODg5MTEwNywiZXhwIjoxNTk5MjUxMTA3fQ.RjwzLtTJTq6fITnnoelxG0bRsKFGSoEMy5noLCouRUQ
+Authorization: [Generate Token by logging In]
 
 #### Create a new Profile
 POST http://localhost:5000/api/profile/
 Content-Type: application/json
-x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3OWRkNmI2MmUyMDkwNTAzMDdhIn0sImlhdCI6MTU5ODYxNzkxNiwiZXhwIjoxNTk4OTc3OTE2fQ.kK20Z4hf2LOivbhjDnc12OlfqXjHb_vuwnf9FvPDHXQ
+Authorization: [Generate Token by logging In]
 
 {
     "status": "Developer",
@@ -49,16 +49,16 @@ x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3O
 }
 
 #### Fetch Profile By ID
-GET http://localhost:5000/api/profile/user/5f490187b29e134d14536158
+GET http://localhost:5000/api/profile/user/5f2aa79dd6b62e209050307a
 
 #### Delete a user
 DELETE http://localhost:5000/api/profile
-x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWY0OTA5YjA0ZTJlOTQyNjg4MTkwYWYwIn0sImlhdCI6MTU5ODYyMjEyOCwiZXhwIjoxNTk4OTgyMTI4fQ.t5XxO1sQe5OF-QZNr5ZEQTsnVM5F4QJCqrvDclFJnh4
+Authorization: [Generate Token by logging In]
 
 #### 
 PUT http://localhost:5000/api/profile/experience
 Content-Type: application/json
-x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3OWRkNmI2MmUyMDkwNTAzMDdhIn0sImlhdCI6MTU5ODYxNzkxNiwiZXhwIjoxNTk4OTc3OTE2fQ.kK20Z4hf2LOivbhjDnc12OlfqXjHb_vuwnf9FvPDHXQ
+Authorization: [Generate Token by logging In]
 
 {
     "title": "Senior Developer",
@@ -71,14 +71,14 @@ x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3O
 
 #### Delete experience 
 
-DELETE http://localhost:5000/api/profile/experience/5f490187b29e134d14536158
+DELETE http://localhost:5000/api/profile/experience/5f4f3719706f091e08da645a
 Content-Type: application/json
-x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3OWRkNmI2MmUyMDkwNTAzMDdhIn0sImlhdCI6MTU5ODYxNzkxNiwiZXhwIjoxNTk4OTc3OTE2fQ.kK20Z4hf2LOivbhjDnc12OlfqXjHb_vuwnf9FvPDHXQ
+Authorization: [Generate Token by logging In]
 
 #### Add education
 PUT http://localhost:5000/api/profile/education
 Content-Type: application/json
-x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3OWRkNmI2MmUyMDkwNTAzMDdhIn0sImlhdCI6MTU5ODYxNzkxNiwiZXhwIjoxNTk4OTc3OTE2fQ.kK20Z4hf2LOivbhjDnc12OlfqXjHb_vuwnf9FvPDHXQ
+Authorization: [Generate Token by logging In]
 
 {
     "school": "Home School",
@@ -92,7 +92,7 @@ x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3O
 #### Delete education
 DELETE http://localhost:5000/api/profile/education/5f496399a791e02ee4ba3b9b
 Content-Type: application/json
-x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3OWRkNmI2MmUyMDkwNTAzMDdhIn0sImlhdCI6MTU5ODYxNzkxNiwiZXhwIjoxNTk4OTc3OTE2fQ.kK20Z4hf2LOivbhjDnc12OlfqXjHb_vuwnf9FvPDHXQ
+Authorization: [Generate Token by logging In]
 
 #### Fetch github repository
 GET http://localhost:5000/api/profile/github/gagandeep39
@@ -100,47 +100,47 @@ GET http://localhost:5000/api/profile/github/gagandeep39
 #### Create post
 POST http://localhost:5000/api/posts
 Content-Type: application/json
-x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3OWRkNmI2MmUyMDkwNTAzMDdhIn0sImlhdCI6MTU5ODYxNzkxNiwiZXhwIjoxNTk4OTc3OTE2fQ.kK20Z4hf2LOivbhjDnc12OlfqXjHb_vuwnf9FvPDHXQ
+Authorization: [Generate Token by logging In]
 
 {
-    "text": "I want to kill myself"
+    "text": "Demo Post"
 }
 
 #### Fetch All posts
 GET http://localhost:5000/api/posts
 Content-Type: application/json
-x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3OWRkNmI2MmUyMDkwNTAzMDdhIn0sImlhdCI6MTU5ODYxNzkxNiwiZXhwIjoxNTk4OTc3OTE2fQ.kK20Z4hf2LOivbhjDnc12OlfqXjHb_vuwnf9FvPDHXQ
+Authorization: [Generate Token by logging In]
 
 #### Fetch Post by ID
 GET http://localhost:5000/api/posts/5f4a14fdda8cca4b5c02704b
 Content-Type: application/json
-x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3OWRkNmI2MmUyMDkwNTAzMDdhIn0sImlhdCI6MTU5ODYxNzkxNiwiZXhwIjoxNTk4OTc3OTE2fQ.kK20Z4hf2LOivbhjDnc12OlfqXjHb_vuwnf9FvPDHXQ
+Authorization: [Generate Token by logging In]
 
 #### Delete Post by ID
 DELETE http://localhost:5000/api/posts/5f4a14fdda8cca4b5c02704b
 Content-Type: application/json
-x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3OWRkNmI2MmUyMDkwNTAzMDdhIn0sImlhdCI6MTU5ODYxNzkxNiwiZXhwIjoxNTk4OTc3OTE2fQ.kK20Z4hf2LOivbhjDnc12OlfqXjHb_vuwnf9FvPDHXQ
+Authorization: [Generate Token by logging In]
 
 #### Like a post
 PUT http://localhost:5000/api/posts/like/5f4a20a55e19662968dbf250
 Content-Type: application/json
-x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3OWRkNmI2MmUyMDkwNTAzMDdhIn0sImlhdCI6MTU5ODYxNzkxNiwiZXhwIjoxNTk4OTc3OTE2fQ.kK20Z4hf2LOivbhjDnc12OlfqXjHb_vuwnf9FvPDHXQ
+Authorization: [Generate Token by logging In]
 
 #### Like a post
 PUT http://localhost:5000/api/posts/unlike/5f4a20a55e19662968dbf250
 Content-Type: application/json
-x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3OWRkNmI2MmUyMDkwNTAzMDdhIn0sImlhdCI6MTU5ODYxNzkxNiwiZXhwIjoxNTk4OTc3OTE2fQ.kK20Z4hf2LOivbhjDnc12OlfqXjHb_vuwnf9FvPDHXQ
+Authorization: [Generate Token by logging In]
 
 #### Create a comment
 POST http://localhost:5000/api/posts/comment/5f4a20a55e19662968dbf250
 Content-Type: application/json
-x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3OWRkNmI2MmUyMDkwNTAzMDdhIn0sImlhdCI6MTU5ODYxNzkxNiwiZXhwIjoxNTk4OTc3OTE2fQ.kK20Z4hf2LOivbhjDnc12OlfqXjHb_vuwnf9FvPDHXQ
+Authorization: [Generate Token by logging In]
 
 {
     "text": "You are gonna be fine"
 }
 
 #### Delete a comment
-DELETE http://localhost:5000/api/posts/comment/5f4a20a55e19662968dbf250/5f4a4be5cfbf6d49d4b3c80f
+DELETE http://localhost:5000/api/posts/comment/5f4a20a55e19662968dbf250/5f5499c31699680914ae7d36
 Content-Type: application/json
-x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3OWRkNmI2MmUyMDkwNTAzMDdhIn0sImlhdCI6MTU5ODYxNzkxNiwiZXhwIjoxNTk4OTc3OTE2fQ.kK20Z4hf2LOivbhjDnc12OlfqXjHb_vuwnf9FvPDHXQ
+Authorization: [Generate Token by logging In]
