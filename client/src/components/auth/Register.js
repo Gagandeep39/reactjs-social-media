@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 import { setAlert } from '../../store/actions/alerts';
 import { register } from '../../store/actions/auth';
 import PropTypes from 'prop-types';
+import TextFieldGroup from '../common/TextFieldGroup';
 
 // Destructuring props to actual props
-const Register = ({ setAlert, register, isAuthenticated }) => {
+const Register = ({ setAlert, register, isAuthenticated, errors }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -42,49 +43,38 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
         <i className='fas fa-user'></i> Create Your Account
       </p>
       <form className='form' onSubmit={onSubmit}>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Name'
-            name='name'
-            required
-            value={name}
-            onChange={onChange}
-          />
-        </div>
-        <div className='form-group'>
-          <input
-            type='email'
-            placeholder='Email Address'
-            name='email'
-            value={email}
-            onChange={(e) => onChange(e)}
-          />
-          <small className='form-text'>
-            This site uses Gravatar so if you want a profile image, use a
-            Gravatar email
-          </small>
-        </div>
-        <div className='form-group'>
-          <input
-            type='password'
-            placeholder='Password'
-            name='password'
-            minLength='6'
-            value={password}
-            onChange={onChange}
-          />
-        </div>
-        <div className='form-group'>
-          <input
-            type='password'
-            placeholder='Confirm Password'
-            name='password2'
-            minLength='6'
-            value={password2}
-            onChange={onChange}
-          />
-        </div>
+        <TextFieldGroup
+          type='text'
+          placeholder='Name'
+          name='name'
+          value={name}
+          onChange={onChange}
+          error={errors.name}
+        />
+        <TextFieldGroup
+          placeholder='Email Address'
+          name='email'
+          type='email'
+          value={email}
+          onChange={(e) => onChange(e)}
+          error={errors.email}
+        />
+        <TextFieldGroup
+          placeholder='Password'
+          name='password'
+          type='password'
+          value={password}
+          onChange={onChange}
+          error={errors.password}
+        />
+        <TextFieldGroup
+          placeholder='Confirm Password'
+          name='password2'
+          type='password'
+          value={password2}
+          onChange={onChange}
+          error={errors.password2}
+        />
         <input type='submit' className='btn btn-primary' value='Register' />
       </form>
       <p className='my-1'>
@@ -98,11 +88,13 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.isAuthenticated,
+    errors: state.error,
   };
 };
 

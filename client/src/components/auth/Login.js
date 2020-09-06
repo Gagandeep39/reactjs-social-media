@@ -3,8 +3,9 @@ import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { login } from '../../store/actions/auth';
+import TextFieldGroup from '../common/TextFieldGroup';
 
-const Login = ({ login, isAuthenticated }) => {
+const Login = ({ login, isAuthenticated, errors }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -29,29 +30,22 @@ const Login = ({ login, isAuthenticated }) => {
         <i className='fas fa-user'></i> Sign into Your Account
       </p>
       <form className='form' onSubmit={onSubmit}>
-        <div className='form-group'>
-          <input
-            type='email'
-            placeholder='Email Address'
-            name='email'
-            value={email}
-            onChange={(e) => onChange(e)}
-          />
-          <small className='form-text'>
-            This site uses Gravatar so if you want a profile image, use a
-            Gravatar email
-          </small>
-        </div>
-        <div className='form-group'>
-          <input
-            type='password'
-            placeholder='Password'
-            name='password'
-            minLength='6'
-            value={password}
-            onChange={onChange}
-          />
-        </div>
+        <TextFieldGroup
+          placeholder='Email Address'
+          name='email'
+          type='email'
+          value={email}
+          onChange={(e) => onChange(e)}
+          error={errors.email}
+        />
+        <TextFieldGroup
+          placeholder='Password'
+          name='password'
+          type='password'
+          value={password}
+          onChange={onChange}
+          error={errors.password}
+        />
         <input type='submit' className='btn btn-primary' value='Login' />
       </form>
       <p className='my-1'>
@@ -64,11 +58,13 @@ const Login = ({ login, isAuthenticated }) => {
 Login.propTypes = {
   login: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
+  errors: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.isAuthenticated,
+    errors: state.error,
   };
 };
 
