@@ -113,15 +113,11 @@ export const createOrUpdateProfile = (
     dispatch(setAlert(edit ? 'Profile Updated' : 'Profile Created', 'success'));
     if (!edit) history.push('/dashboard');
   } catch (error) {
-    const errorArray = error.response.data.errors;
-    errorArray.forEach((e) => dispatch(setAlert(e.msg, 'danger')));
+    console.log(error.response);
     dispatch({
-      type: actionType.PROFILE_ERROR,
-      payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
-      },
-    });
+      type: actionType.GET_ERRORS,
+      payload: error.response.data
+    })
   }
 };
 
