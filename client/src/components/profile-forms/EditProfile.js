@@ -6,12 +6,17 @@ import {
   createOrUpdateProfile,
   getCurrentProfile,
 } from '../../store/actions/profile';
+import SelectListGroup from '../common/SelectListGroup';
+import TextFieldGroup from '../common/TextFieldGroup';
+import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
+import InputGroup from '../common/InputGroup';
 
 const EditProfile = ({
   profile: { profile, loading },
   createOrUpdateProfile,
   history,
   getCurrentProfile,
+  errors,
 }) => {
   const [formData, setFormData] = useState({
     company: '',
@@ -65,6 +70,19 @@ const EditProfile = ({
     });
   }, [getCurrentProfile, loading]);
 
+  // Select options for status
+  const options = [
+    { label: '* Select Professional Status', value: 0 },
+    { label: 'Developer', value: 'Developer' },
+    { label: 'Junior Developer', value: 'Junior Developer' },
+    { label: 'Senior Developer', value: 'Senior Developer' },
+    { label: 'Manager', value: 'Manager' },
+    { label: 'Student or Learning', value: 'Student or Learning' },
+    { label: 'Instructor or Teacher', value: 'Instructor or Teacher' },
+    { label: 'Intern', value: 'Intern' },
+    { label: 'Other', value: 'Other' },
+  ];
+
   const onChange = (event) =>
     setFormData({ ...formData, [event.target.name]: event.target.value });
 
@@ -82,92 +100,69 @@ const EditProfile = ({
       </p>
       <small>* = required field</small>
       <form className='form' onSubmit={handleSubmit}>
-        <div className='form-group'>
-          <select name='status' onChange={onChange} value={status}>
-            <option value='0'>* Select Professional Status</option>
-            <option value='Developer'>Developer</option>
-            <option value='Junior Developer'>Junior Developer</option>
-            <option value='Senior Developer'>Senior Developer</option>
-            <option value='Manager'>Manager</option>
-            <option value='Student or Learning'>Student or Learning</option>
-            <option value='Instructor'>Instructor or Teacher</option>
-            <option value='Intern'>Intern</option>
-            <option value='Other'>Other</option>
-          </select>
-          <small className='form-text'>
-            Give us an idea of where you are at in your career
-          </small>
-        </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Company'
-            name='company'
-            onChange={onChange}
-            value={company}
-          />
-          <small className='form-text'>
-            Could be your own company or one you work for
-          </small>
-        </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Website'
-            name='website'
-            onChange={onChange}
-            value={website}
-          />
-          <small className='form-text'>
-            Could be your own or a company website
-          </small>
-        </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Location'
-            name='location'
-            onChange={(e) => onChange(e)}
-            value={location}
-          />
-          <small className='form-text'>
-            City & state suggested (eg. Boston, MA)
-          </small>
-        </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='* Skills'
-            name='skills'
-            onChange={onChange}
-            value={skills}
-          />
-          <small className='form-text'>
-            Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)
-          </small>
-        </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Github Username'
-            name='githubusername'
-            onChange={onChange}
-            value={githubusername}
-          />
-          <small className='form-text'>
-            If you want your latest repos and a Github link, include your
-            username
-          </small>
-        </div>
-        <div className='form-group'>
-          <textarea
-            placeholder='A short bio of yourself'
-            name='bio'
-            onChange={onChange}
-            value={bio}
-          ></textarea>
-          <small className='form-text'>Tell us a little about yourself</small>
-        </div>
+        <SelectListGroup
+          placeholder='Status'
+          name='status'
+          value={status}
+          onChange={onChange}
+          options={options}
+          error={errors.status}
+          info='Give us an idea of where you are at in your career'
+        />
+        <TextFieldGroup
+          type='text'
+          placeholder='Company'
+          name='company'
+          onChange={onChange}
+          value={company}
+          error={errors.company}
+          info='Could be your own company or one you work for'
+        />
+        <TextFieldGroup
+          type='text'
+          placeholder='Website'
+          name='website'
+          onChange={onChange}
+          value={website}
+          error={errors.website}
+          info='Could be your own or a company website'
+        />
+        <TextFieldGroup
+          type='text'
+          placeholder='Location'
+          name='location'
+          onChange={(e) => onChange(e)}
+          value={location}
+          error={errors.location}
+          info='City & state suggested (eg. Boston, MA)'
+        />
+        <TextFieldGroup
+          type='text'
+          placeholder='* Skills'
+          name='skills'
+          onChange={onChange}
+          value={skills}
+          error={errors.skills}
+          info='Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)'
+        />
+        <TextFieldGroup
+          type='text'
+          placeholder='Github Username'
+          name='githubusername'
+          onChange={onChange}
+          value={githubusername}
+          error={errors.githubusername}
+          info='If you want your latest repos and a Github link, include your
+          username'
+        />
+        <TextAreaFieldGroup
+          placeholder='A short bio of yourself'
+          name='bio'
+          onChange={onChange}
+          value={bio}
+          error={errors.bio}
+          info='Tell us a little about yourself'
+        />
 
         <div className='my-2'>
           <button
@@ -181,60 +176,51 @@ const EditProfile = ({
         </div>
         {displaySocialInputs ? (
           <Fragment>
-            <div className='form-group social-input'>
-              <i className='fab fa-twitter fa-2x'></i>
-              <input
-                type='text'
-                placeholder='Twitter URL'
-                name='twitter'
-                onChange={onChange}
-                value={twitter}
-              />
-            </div>
+            <InputGroup
+              placeholder='Twitter Profile URL'
+              name='twitter'
+              icon='fab fa-twitter'
+              onChange={onChange}
+              value={twitter}
+              error={errors.twitter}
+            />
+            <InputGroup
+              type='text'
+              placeholder='Facebook URL'
+              name='facebook'
+              onChange={onChange}
+              value={facebook}
+              icon='fab fa-facebook'
+              error={errors.facebook}
+            />
+            <InputGroup
+              type='text'
+              placeholder='YouTube URL'
+              name='youtube'
+              onChange={onChange}
+              value={youtube}
+              icon='fab fa-youtube'
+              error={errors.youtube}
+            />
 
-            <div className='form-group social-input'>
-              <i className='fab fa-facebook fa-2x'></i>
-              <input
-                type='text'
-                placeholder='Facebook URL'
-                name='facebook'
-                onChange={onChange}
-                value={facebook}
-              />
-            </div>
-
-            <div className='form-group social-input'>
-              <i className='fab fa-youtube fa-2x'></i>
-              <input
-                type='text'
-                placeholder='YouTube URL'
-                name='youtube'
-                onChange={onChange}
-                value={youtube}
-              />
-            </div>
-
-            <div className='form-group social-input'>
-              <i className='fab fa-linkedin fa-2x'></i>
-              <input
-                type='text'
-                placeholder='Linkedin URL'
-                name='linkedin'
-                onChange={onChange}
-                value={linkedin}
-              />
-            </div>
-
-            <div className='form-group social-input'>
-              <i className='fab fa-instagram fa-2x'></i>
-              <input
-                type='text'
-                placeholder='Instagram URL'
-                name='instagram'
-                onChange={onChange}
-                value={instagram}
-              />
-            </div>
+            <InputGroup
+              type='text'
+              placeholder='Linkedin URL'
+              name='linkedin'
+              onChange={onChange}
+              value={linkedin}
+              icon='fab fa-linkedin'
+              error={errors.linkedin}
+            />
+            <InputGroup
+              type='text'
+              placeholder='Instagram URL'
+              name='instagram'
+              onChange={onChange}
+              value={instagram}
+              icon='fab fa-instagram'
+              error={errors.instagram}
+            />
           </Fragment>
         ) : null}
 
@@ -250,10 +236,12 @@ const EditProfile = ({
 EditProfile.propTypes = {
   createOrUpdateProfile: PropTypes.func.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   profile: state.profile,
+  errors: state.error,
 });
 
 // with router is used to pass history bject to other component(ere it will be passed to createOrUpdate profile)
