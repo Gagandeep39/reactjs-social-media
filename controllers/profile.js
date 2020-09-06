@@ -2,6 +2,7 @@ const axios = require('axios');
 const User = require('../models/Users');
 const Profile = require('../models/Profile');
 const { validationResult } = require('express-validator');
+const keys = require('../config/keys');
 
 exports.fetchCurrentUser = async (req, res) => {
   Profile.findOne({
@@ -57,11 +58,11 @@ exports.createOrUpdateProfile = async (req, res) => {
           { $set: profileFields },
           { new: true }
         ).then(() => res.json(profileFields));
+      } else {
+        // Create
+        profile = new Profile(profileFields);
+        profile.save().then(() => res.json(profile));
       }
-
-      // Create
-      profile = new Profile(profileFields);
-      profile.save().then(() => res.json(profile));
     })
     .catch((error) => {
       console.log(error);
@@ -97,7 +98,6 @@ exports.fetchProfileById = async (req, res) => {
 };
 
 exports.deleteProfile = async (req, res) => {
-  console.log(here);
   Profile.findOneAndRemove({ user: req.user.id })
     .then(() => {
       User.findOneAndRemove({ _id: req.user.id }).then(() =>
@@ -203,9 +203,7 @@ exports.getUserRepositories = (req, res) => {
   try {
     const uri = `https://api.github.com/users/${
       req.params.username
-    }/repos?per_page=5&sort=created:asc&client_id=${config.get(
-      'githubClientId'
-    )}&client_secret=${config.get('githubSecret')}`;
+    }/repos?per_page=5&sort=created:asc&client_id=${keys.githubClientId}&client_secret=${keys.githubSecret}`;
     const header = { 'user-agent': 'node.js' };
     axios
       .get(uri, { headers: header })
@@ -218,6 +216,7 @@ exports.getUserRepositories = (req, res) => {
         console.log(error);
       });
   } catch (error) {
+    console.log(error);
     res.status(500).send('Server Error');
   }
 };
