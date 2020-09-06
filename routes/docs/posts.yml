@@ -1,0 +1,239 @@
+paths:
+  /api/posts:
+    post:
+      tags:
+        - Posts
+      summary: Create a new Post
+      description: Creates a post
+      security:
+       - bearerAuth: []
+      requestBody:
+        description: Profile object
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostReq'
+      responses:
+        200:
+          description: successful operation
+          content:
+           application/json:
+             schema:
+               $ref: '#/components/schemas/PostRes'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+        401:
+          $ref: '#/components/responses/AuthorizationError'
+    get:
+      tags:
+        - Posts
+      summary: Fetch All posts
+      description: Fetch all post
+      security:
+       - bearerAuth: []
+      responses:
+        200:
+          description: successful operation
+          content:
+           application/json:
+             schema:
+                type: "array"
+                items:
+                  $ref: '#/components/schemas/PostRes'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+        401:
+          $ref: '#/components/responses/AuthorizationError'
+  /api/posts/{postId}:
+    get:
+      tags:
+        - Posts
+      summary: Fetch post by ID
+      description: Fetch by ID
+      security:
+       - bearerAuth: []
+      parameters:
+      - name: "postId"
+        in: "path"
+        description: "Fetch Post by ID"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: successful operation
+          content:
+           application/json:
+             schema:
+               $ref: '#/components/schemas/PostRes'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+        401:
+          $ref: '#/components/responses/AuthorizationError'
+    delete:
+      tags:
+        - Posts
+      summary: Delete post by ID
+      description: Delete by ID
+      security:
+       - bearerAuth: []
+      parameters:
+      - name: "postId"
+        in: "path"
+        description: "Delete post by ID"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: successful operation
+          content:
+           application/json:
+             schema:
+               $ref: '#/components/schemas/PostRemoved'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+        401:
+          $ref: '#/components/responses/AuthorizationError'
+  /api/posts/like/{id}:
+    put:
+      tags:
+        - Posts
+      summary: Likes a post
+      description: Like a post by its Id
+      security:
+       - bearerAuth: []
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Add like using post ID"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: successful operation
+          content:
+           application/json:
+             schema:
+                type: "array"
+                items:
+                  $ref: '#/components/schemas/Like'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+        401:
+          $ref: '#/components/responses/AuthorizationError'
+  /api/posts/unlike/{id}:
+    put:
+      tags:
+        - Posts
+      summary: UnLikes a post
+      description: UnLike a post by its Id
+      security:
+       - bearerAuth: []
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Unlike a liked post based on post ID"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: successful operation
+          content:
+           application/json:
+             schema:
+                type: "array"
+                items:
+                  $ref: '#/components/schemas/Like'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+        401:
+          $ref: '#/components/responses/AuthorizationError'
+  /api/posts/comment/{id}:
+    post:
+      tags:
+        - Posts
+      summary: Add comment
+      description: Add comment to the post
+      security:
+       - bearerAuth: []
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of post on which comment is to be created"
+          required: true
+          schema:
+            type: "string"
+      requestBody:
+        description: Comment Request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentReq'
+      responses:
+        200:
+          description: successful operation
+          content:
+           application/json:
+             schema:
+                type: "array"
+                items:
+                  $ref: '#/components/schemas/Comment'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+        401:
+          $ref: '#/components/responses/AuthorizationError'
+  /api/posts/comment/{id}/{commentId}:
+    delete:
+      tags:
+        - Posts
+      summary: Delet a comment
+      description: Delete coment using commentId and post Id
+      security:
+       - bearerAuth: []
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of Post"
+        required: true
+        schema:
+          type: "string"
+      - name: "commentId"
+        in: "path"
+        description: "ID of Comment to be deleted"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: successful operation
+          content:
+           application/json:
+             schema:
+                type: "array"
+                items:
+                  $ref: '#/components/schemas/Comment'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+        401:
+          $ref: '#/components/responses/AuthorizationError'

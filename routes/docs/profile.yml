@@ -1,0 +1,248 @@
+paths:
+  /api/profile/me:
+    get:
+      tags:
+        - Profile
+      summary: Fetch User profile
+      description: Fetches user's profile, education, experience
+      security:
+        - bearerAuth: []
+      parameters: []
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileRes'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+        401:
+          $ref: '#/components/responses/AuthorizationError'
+  /api/profile:
+    post:
+      tags:
+        - Profile
+      summary: Create Profile
+      description: Create a user profile
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Profile object
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfileReq'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileRes'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/AuthorizationError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+    get:
+      tags:
+        - Profile
+      summary: Fetch all profiles
+      description: Fetches all profiless
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProfileRes'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/AuthorizationError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags:
+        - Profile
+      summary: Delete profile
+      description: Delete profile of the user with the help of token
+      security:
+        - bearerAuth: []
+      parameters: []
+      responses:
+        200:
+          description: User Removed
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/UserRemoved'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/AuthorizationError'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /api/profile/user/{userId}:
+    get:
+      tags:
+        - Profile
+      summary: Fetch profile by ID
+      description: Fetches profile of a user whose id is passed as parameter
+      parameters:
+      - in: "path"
+        name: "userId"
+        description: "ID of User whose profile to return"
+        required: true
+        schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileRes'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /api/profile/experience:
+    put:
+      tags:
+        - Profile
+      summary: Add new experience of the user
+      description: Creates a new entry of work experience
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Profile object
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Experience'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileRes'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+        401:
+          $ref: '#/components/responses/AuthorizationError'
+  /api/profile/experience/{expId}:
+    delete:
+      tags:
+        - Profile
+      summary: Delete Experience
+      description: Delete expreience of user with the help of ID passed as param
+      security:
+        - bearerAuth: []
+      parameters:
+      - name: "expId"
+        in: "path"
+        description: "ID of experience to delete"
+        required: true
+        schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileRes'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+        401:
+          $ref: '#/components/responses/AuthorizationError'
+  /api/profile/education:
+    put:
+      tags:
+        - Profile
+      summary: Add new education details
+      description: Delete profile of the user with the help of token
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Profile object
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Education'
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileRes'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+        401:
+          $ref: '#/components/responses/AuthorizationError'
+  /api/profile/education/{eduId}:
+    delete:
+      tags:
+        - Profile
+      summary: Delete Education
+      description: Delete education details of user with the help of ID passed as param
+      security:
+        - bearerAuth: []
+      parameters:
+      - name: "eduId"
+        in: "path"
+        description: "ID of education entry to delete"
+        required: true
+        schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileRes'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+        401:
+          $ref: '#/components/responses/AuthorizationError'
+  /api/profile/github/{username}:
+    get:
+      tags:
+        - Profile
+      summary: Fetch Github repositories
+      description: Fetch github repositories using github username
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "username of user whose repositories are to be fetched"
+        required: true
+        schema:
+            type: string
+      responses:
+        200:
+          $ref: '#/components/responses/Success'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/InternalServerError'

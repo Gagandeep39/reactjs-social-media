@@ -1,0 +1,282 @@
+openapi: 3.0.1
+info:
+  title: Dev Connect Docs
+  description: Dev COnnect Server Docs
+  contact:
+    email: singh.gagandeep3911@gmail.com
+  license:
+    name: Apache 2.0
+  version: 1.0.0
+servers:
+- url: https://localhost:5000/api-docs
+- url: http://localhost:5000/api-docs
+tags:
+- name: User
+  description: Operations about user
+- name: Profile
+  description: Operations about Profile
+- name: Posts
+  description: Operations about posts
+components:
+  responses:
+    AuthorizationError: 
+      description: Access token is missing or invalid
+    InternalServerError:
+      description: Internal Server Error
+    Success:
+      description: Successfully Completed task
+    BadRequest:
+      description: Bad request
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+          example: test@mail.com
+        password:
+          type: string
+          example: "123456"
+    Register:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Gagandeep Singh
+        email:
+          type: string
+          example: test@mail.com
+        password:
+          type: string
+          example: "123456"
+    Token:
+      type: object
+      properties:
+        token:
+          type: string
+          example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWYyYWE3OWRkNmI2MmUyMDkwNTAzMDdhIn0sImlhdCI6MTU5OTIyMDY0MCwiZXhwIjoxNTk5NTgwNjQwfQ.-Xbpcl130MALdAATC2AgVptngaXcC_E91OlnVJTiGjU
+    ProfileReq:
+      type: "object"
+      properties:
+        company:
+          type: "string"
+          example: Lol
+        website:
+          type: "string"
+          example: www.xyz.com
+        location:
+          type: "string"
+          example: Earth
+        bio:
+          type: "string"
+          example: Hi, I am a guy
+        status:
+          type: "string"
+        githubusername:
+          type: "string"
+          example: gagandeep39
+        skills:
+          type: "string"
+          example: JS, Springboot, Angular, ReactJS
+        youtube:
+          type: "string"
+          example: www.youtube.com/gagandeep39
+        facebook:
+          type: "string"
+          example: www.facebook.com/facebook
+        twitter:
+          type: "string"
+          example: www.twitter.com/twitter
+        instagram:
+          type: "string"
+          example: www.facebook.com/facebook
+        linkedin:
+          type: "string"
+          example: www.linkedin.com/linkedin
+    UserData:
+      type: "object"
+      properties:
+        date:
+          type: "string"
+        _id:
+          type: "string"
+        name:
+          type: "string"
+        email:
+          type: "string"
+        avatar:
+          type: "string"
+    Education:
+      type: "object"
+      properties:
+        school:
+          type: "string"
+          example: Random Engineering Institute
+        degree:
+          type: "string"
+          example: B.E
+        fieldofstudy:
+          type: "string"
+          example: Computer Science
+        from:
+          type: "string"
+          example: 2016
+        to:
+          type: "string"
+          example: 2020
+        location:
+          type: "string"
+          example: Earth
+        current:
+          type: "string"
+          example: false
+        description:
+          type: "string"
+          example: Its just an education entry
+    Experience:
+      type: "object"
+      properties:
+        title:
+          type: "string"
+          example: Senior Developer
+        company:
+          type: "string"
+          example: Random Company
+        from:
+          type: "string"
+          example: 12-12-2019
+        to:
+          type: "string"
+          example: 12-12-2019
+        location:
+          type: "string"
+          example: Somewhere on Earth
+        current:
+          type: "string"
+          example: true
+        description:
+          type: "string"
+          example: Just another boring Job, nothing special
+    ProfileRes:
+      type: "object"
+      properties:
+        location:
+          type: string
+        website:
+          type: string
+        skills:
+          type: array
+          items: {}
+          example:
+            - HTML
+        experience:
+          type: array
+          items:
+            $ref: '#/components/schemas/Experience'
+        education:
+          type: array
+          items:
+            $ref: '#/components/schemas/Education'
+        date:
+          type: string
+        company:
+          type: string
+        githubusername:
+          type: string
+        _id:
+          type: string
+        user:
+          type: object
+          properties:
+            _id:
+              type: string
+            name:
+              type: string
+            avatar:
+              type: string
+        status:
+          type: string
+        bio:
+          type: string
+    UserRemoved:
+      type: "object"
+      properties:
+        msg:
+          type: "string"
+          example: User Removed 
+    PostRemoved:
+      type: "object"
+      properties:
+        msg:
+          type: "string"
+          example: Post Removed
+    Like:
+      type: "object"
+      properties:
+        _id:
+          type: string
+          example: "5f5239b9f747dd105c1d5465"
+        user:
+          type: string
+          example: "5f2aa79dd6b62e209050307a"
+    Comment:
+      type: "object"
+      properties:
+        _id:
+          type: string
+          example: "5f5239b9f747dd105c1d5465"
+        user:
+          type: string
+          example: "5f2aa79dd6b62e209050307a"
+        date:
+          type: string
+          example: "2020-09-03T09:25:42.804Z"
+        text:
+          type: "string"
+          example: "Post text Demo"
+        avatar:
+          type: "string"
+          example: "//www.gravatar.com/avatar/97dfebf4098c0f5c16bca61e2b76c373?r=pg&s=200&d=mm"
+    PostRes:
+      type: "object"
+      properties:
+        _id:
+          type: string
+          example: "5f5239b9f747dd105c1d5465"
+        user:
+          type: string
+          example: "5f2aa79dd6b62e209050307a"
+        date:
+          type: string
+          example: "2020-09-03T09:25:42.804Z"
+        text:
+          type: "string"
+          example: "Post text Demo"
+        avatar:
+          type: "string"
+          example: "//www.gravatar.com/avatar/97dfebf4098c0f5c16bca61e2b76c373?r=pg&s=200&d=mm"
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+        likes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Like'
+    PostReq:
+      type: "object"
+      properties:
+        text:
+          type: "string"
+          example: "Post text Demo"
+    CommentReq:
+      type: "object"
+      properties:
+          text:
+            type: "string"
+            example: "Demo Comment Text"
