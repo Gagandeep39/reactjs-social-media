@@ -5,4 +5,4 @@ import profile from './profile';
 import post from './post';
 import error from './error';
 
-export default combineReducers({ alerts, auth, profile, error });
+export default combineReducers({ alerts, auth, profile, post, error });
