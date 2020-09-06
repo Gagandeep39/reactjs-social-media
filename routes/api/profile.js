@@ -1,9 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const validateProfileInput = require('../../validation/profile');
-const validateExperienceInput = require('../../validation/experience');
-const validateEducationInput = require('../../validation/education');
 const profileController = require('../../controllers/profile');
 const authenticate = () => passport.authenticate('jwt', { session: false });
 
@@ -17,11 +14,7 @@ router.get('/me', authenticate(), profileController.fetchCurrentUser);
  * @route POST /api/profile
  * @description Create/ Update Profile
  */
-router.post(
-  '/',
-  [authenticate(), validateProfileInput],
-  profileController.createOrUpdateProfile
-);
+router.post('/', authenticate(), profileController.createOrUpdateProfile);
 
 /**
  * @route GET /api/profile
@@ -45,11 +38,7 @@ router.delete('/', authenticate(), profileController.deleteProfile);
  * @route PUT /api/profile/experience
  * @description Add new experience entry
  */
-router.put(
-  '/experience',
-  [authenticate(), validateExperienceInput],
-  profileController.addExperience
-);
+router.put('/experience', authenticate(), profileController.addExperience);
 
 /**
  * @route DELETE /api/profile/experience/:expId
@@ -65,11 +54,7 @@ router.delete(
  * @route PUT /api/profile/education
  * @description Add new education entry
  */
-router.put(
-  '/education',
-  [authenticate(), validateEducationInput],
-  profileController.addEducation
-);
+router.put('/education', authenticate(), profileController.addEducation);
 
 /**
  * @route DELETE /api/profile/education/:eduId

@@ -1,9 +1,27 @@
-const { body } = require('express-validator');
+const Validator = require('validator');
+const isEmpty = require('./is-empty');
 
-const validateExperienceInput = [
-  body('title', 'Title Required').not().isEmpty(),
-  body('company', 'Company name Required').not().isEmpty(),
-  body('from', 'From date Required').not().isDate(),
-];
+module.exports = function validateExperienceInput(data) {
+  let errors = {};
 
-module.exports = validateExperienceInput;
+  data.title = !isEmpty(data.title) ? data.title : '';
+  data.company = !isEmpty(data.company) ? data.company : '';
+  data.from = !isEmpty(data.from) ? data.from : '';
+
+  if (Validator.isEmpty(data.title)) {
+    errors.title = 'Job title field is required';
+  }
+
+  if (Validator.isEmpty(data.company)) {
+    errors.company = 'Company field is required';
+  }
+
+  if (Validator.isEmpty(data.from)) {
+    errors.from = 'From date field is required';
+  }
+
+  return {
+    errors,
+    isValid: isEmpty(errors),
+  };
+};

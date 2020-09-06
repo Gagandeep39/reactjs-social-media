@@ -3,15 +3,21 @@ const User = require('../models/Users');
 const Profile = require('../models/Profile');
 const { validationResult } = require('express-validator');
 const keys = require('../config/keys');
+const validateProfileInput = require('../validation/profile');
+const validateExperienceInput = require('../validation/experience');
+const validateEducationInput = require('../validation/education');
 
 exports.fetchCurrentUser = async (req, res) => {
+  const errors = {};
+
   Profile.findOne({
     user: req.user.id,
   })
     .populate('user', ['name', 'avatar'])
     .then((profile) => {
       if (!profile) {
-        return res.status(400).send({ msg: 'Profile not found' });
+        errors.noprofile = 'There is no profile for this user';
+        return res.status(404).json(errors);
       }
       res.send(profile);
     })
@@ -22,11 +28,8 @@ exports.fetchCurrentUser = async (req, res) => {
 };
 
 exports.createOrUpdateProfile = async (req, res) => {
-  console.log(req.body);
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).send({ errors: errors.array() });
-  }
+  const { errors, isValid } = validateProfileInput(req.body);
+  if (!isValid) return res.status(400).json(errors);
 
   const profileFields = {};
   profileFields.user = req.user.id;
@@ -57,11 +60,11 @@ exports.createOrUpdateProfile = async (req, res) => {
           { user: req.user.id },
           { $set: profileFields },
           { new: true }
-        ).then(() => res.json(profileFields));
+        ).then((profile) => res.json(profile));
       } else {
         // Create
         profile = new Profile(profileFields);
-        profile.save().then(() => res.json(profile));
+        profile.save().then((newProfile) => res.json(newProfile));
       }
     })
     .catch((error) => {
@@ -71,9 +74,16 @@ exports.createOrUpdateProfile = async (req, res) => {
 };
 
 exports.fetchAllProfiles = async (req, res) => {
+  const errors = {};
   Profile.find()
     .populate('user', ['name', 'avatar'])
-    .then((profiles) => res.json(profiles))
+    .then((profiles) => {
+      if (!profiles) {
+        errors.noprofile = 'There are no profiles';
+        return res.status(404).json(errors);
+      }
+      res.json(profiles);
+    })
     .catch((error) => {
       console.log(error);
       res.status(500).send('Internal Server Error');
@@ -81,18 +91,23 @@ exports.fetchAllProfiles = async (req, res) => {
 };
 
 exports.fetchProfileById = async (req, res) => {
+  const errors = {};
   Profile.findOne({
     user: req.params.userId,
   })
     .populate('user', ['name', 'avatar'])
     .then((profile) => {
-      if (!profile)
-        return res.status(400).send({ msg: 'No Profile for this User' });
+      if (!profile) {
+        errors.noprofile = 'There is no profile for this user';
+        res.status(404).json(errors);
+      }
       res.json(profile);
     })
     .catch((error) => {
-      if (error.kind === 'ObjectId')
-        return res.status(400).send({ msg: 'No Profile for this User' });
+      if (error.kind === 'ObjectId') {
+        errors.noprofile = 'There is no profile for this user';
+        res.status(404).json(errors);
+      }
       res.status(500).send('Internal Server Error');
     });
 };
@@ -112,9 +127,8 @@ exports.deleteProfile = async (req, res) => {
 };
 
 exports.addExperience = async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty())
-    return res.status(400).send({ errors: errors.array() });
+  const { errors, isValid } = validateExperienceInput(req.body);
+  if (!isValid) return res.status(400).json(errors);
 
   const newExperience = {
     title: req.body.title,
@@ -129,7 +143,7 @@ exports.addExperience = async (req, res) => {
   Profile.findOne({ user: req.user.id })
     .then((profile) => {
       profile.experience.unshift(newExperience);
-      profile.save().then(() => res.json(profile));
+      profile.save().then((profile) => res.json(profile));
     })
     .catch((error) => {
       console.log(error);
@@ -155,9 +169,8 @@ exports.deleteExperience = async (req, res) => {
 };
 
 exports.addEducation = async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty())
-    return res.status(400).send({ errors: errors.array() });
+  const { errors, isValid } = validateEducationInput(req.body);
+  if (!isValid) return res.status(400).json(errors);
 
   const newEducation = {
     school: req.body.school,
@@ -173,7 +186,7 @@ exports.addEducation = async (req, res) => {
   Profile.findOne({ user: req.user.id })
     .then((profile) => {
       profile.education.unshift(newEducation);
-      profile.save().then(() => res.json(profile));
+      profile.save().then((profile) => res.json(profile));
     })
     .catch((error) => {
       console.log(error);
@@ -201,9 +214,7 @@ exports.deleteEducation = async (req, res) => {
 
 exports.getUserRepositories = (req, res) => {
   try {
-    const uri = `https://api.github.com/users/${
-      req.params.username
-    }/repos?per_page=5&sort=created:asc&client_id=${keys.githubClientId}&client_secret=${keys.githubSecret}`;
+    const uri = `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc&client_id=${keys.githubClientId}&client_secret=${keys.githubSecret}`;
     const header = { 'user-agent': 'node.js' };
     axios
       .get(uri, { headers: header })
