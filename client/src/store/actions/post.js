@@ -111,11 +111,8 @@ export const createPost = (formData) => async (dispatch) => {
   } catch (error) {
     console.log(error);
     dispatch({
-      type: actionType.POST_ERROR,
-      payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
-      },
+      type: actionType.GET_ERRORS,
+      payload: error.response.data,
     });
   }
 };
@@ -166,12 +163,16 @@ export const addComment = (postId, formData) => async (dispatch) => {
   } catch (error) {
     console.log(error);
     dispatch({
-      type: actionType.POST_ERROR,
-      payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
-      },
+      type: actionType.GET_ERRORS,
+      payload: error.response.data,
     });
+    // dispatch({
+    //   type: actionType.POST_ERROR,
+    //   payload: {
+    //     msg: error.response.statusText,
+    //     status: error.response.status,
+    //   },
+    // });
   }
 };
 
