@@ -1,12 +1,11 @@
 const { validationResult } = require('express-validator');
 const Post = require('../models/Post');
 const Users = require('../models/Users');
+const validatePostInput = require('../validation/post');
 
 exports.createPost = async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
+  const { errors, isValid } = validatePostInput(req.body);
+  if (!isValid) return res.status(400).json(errors);
 
   Users.findById(req.user.id)
     .select('-password')
@@ -31,20 +30,25 @@ exports.fetchAllPosts = async (req, res) => {
     .then((posts) => res.json(posts))
     .catch((error) => {
       console.log(error.message);
-      res.status(500).send('Server Error');
+      res.status(500).json({ msg: 'No posts found' });
     });
 };
 
 exports.fetchPostById = async (req, res) => {
   Post.findById(req.params.postId)
     .then((posts) => {
-      if (!posts) return res.status(404).json({ msg: 'Post not found' });
+      if (!posts)
+        return res
+          .status(404)
+          .json({ nopostfound: 'No post found with that ID' });
       res.json(posts);
     })
     .catch((error) => {
       console.log(error.message);
       if (error.kind === 'ObjectId')
-        return res.status(404).json({ msg: 'Post not found' });
+        return res
+          .status(404)
+          .json({ nopostfound: 'No post found with that ID' });
       res.status(500).send('Server Error');
     });
 };
@@ -107,10 +111,8 @@ exports.unlikePost = async (req, res) => {
 };
 
 exports.commentOnPost = async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
+  const { errors, isValid } = validatePostInput(req.body);
+  if (!isValid) return res.status(400).json(errors);
 
   Users.findById(req.user.id)
     .then((user) => {

@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const validatePostInput = require('../../validation/post');
 const postsController = require('../../controllers/posts');
 const passport = require('passport');
 const authenticate = () => passport.authenticate('jwt', { session: false });
@@ -9,11 +8,7 @@ const authenticate = () => passport.authenticate('jwt', { session: false });
  * @route POST /api/posts
  * @description Create a new Post
  */
-router.post(
-  '/',
-  [authenticate(), validatePostInput],
-  postsController.createPost
-);
+router.post('/', authenticate(), postsController.createPost);
 
 /**
  * @route GET /api/posts
@@ -49,11 +44,7 @@ router.put('/unlike/:id', authenticate(), postsController.unlikePost);
  * @route POST /api/posts/comment/:id
  * @description Create comment on a post
  */
-router.post(
-  '/comment/:id',
-  [authenticate(), validatePostInput],
-  postsController.commentOnPost
-);
+router.post('/comment/:id', authenticate(), postsController.commentOnPost);
 
 /**
  * @route POST /api/posts/comment/:id/:commentId
