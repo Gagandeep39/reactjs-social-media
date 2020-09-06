@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createPost } from '../../store/actions/post';
+import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 
-function PostForm({ createPost }) {
+function PostForm({ createPost, errors }) {
   const [text, setText] = useState('');
 
   const handleSubmit = (event) => {
@@ -18,15 +19,13 @@ function PostForm({ createPost }) {
         <h3>Say Something...</h3>
       </div>
       <form class='form my-1' onSubmit={handleSubmit}>
-        <textarea
+        <TextAreaFieldGroup
           name='text'
-          cols='30'
-          rows='5'
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder='Create a post'
-          required
-        ></textarea>
+          error={errors.text}
+        />
         <input type='submit' class='btn btn-dark my-1' value='Submit' />
       </form>
     </div>
@@ -35,6 +34,11 @@ function PostForm({ createPost }) {
 
 PostForm.propTypes = {
   createPost: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
 };
 
-export default connect(null, { createPost })(PostForm);
+const mapStateToProps = (state) => ({
+  errors: state.error,
+});
+
+export default connect(mapStateToProps, { createPost })(PostForm);

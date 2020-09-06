@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addComment } from '../../store/actions/post';
+import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 
-function CommentForm({ postId, addComment }) {
+function CommentForm({ postId, addComment, errors }) {
   const [text, setText] = useState('');
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -16,15 +17,13 @@ function CommentForm({ postId, addComment }) {
         <h3>Leave A Comment</h3>
       </div>
       <form class='form my-1' onSubmit={handleSubmit}>
-        <textarea
+        <TextAreaFieldGroup
+          placeholder='Reply to post'
           name='text'
-          cols='30'
-          rows='5'
-          placeholder='Comment on this post'
-          required
           value={text}
           onChange={(e) => setText(e.target.value)}
-        ></textarea>
+          error={errors.text}
+        />
         <input type='submit' class='btn btn-dark my-1' value='Submit' />
       </form>
     </div>
@@ -34,6 +33,11 @@ function CommentForm({ postId, addComment }) {
 CommentForm.propTypes = {
   addComment: PropTypes.func.isRequired,
   postId: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
 };
 
-export default connect(null, { addComment })(CommentForm);
+const mapStateToProps = (state) => ({
+  errors: state.error,
+});
+
+export default connect(mapStateToProps, { addComment })(CommentForm);
