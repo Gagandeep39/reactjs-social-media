@@ -21,11 +21,10 @@ export const register = ({ name, email, password }) => async (dispatch) => {
     });
     dispatch(loadUser());
   } catch (error) {
-    const errorArray = error.response.data.errors;
-    errorArray.forEach((e) => dispatch(setAlert(e.msg, 'danger')));
     dispatch({
-      type: actionType.REGISTER_FAIL,
-    });
+      type: actionType.GET_ERRORS,
+      payload: error.response.data
+    })
   }
 };
 
@@ -64,12 +63,11 @@ export const login = (email, password) => async (dispatch) => {
       payload: res.data,
     });
   } catch (error) {
-    const errorArray = error.response.data.errors;
-    errorArray.forEach((e) => dispatch(setAlert(e.msg, 'danger')));
     dispatch({
-      type: actionType.LOGIN_FAIL,
-    });
-    dispatch(loadUser());
+      type: actionType.GET_ERRORS,
+      payload: error.response.data
+    })
+    // dispatch(loadUser());
   }
 };
 
