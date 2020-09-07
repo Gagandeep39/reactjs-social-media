@@ -7,6 +7,7 @@ import setAuthToken from '../../utils/setAuthToken';
  * @desc Register User
  */
 export const register = ({ name, email, password }) => async (dispatch) => {
+  dispatch({type: actionType.START_LOADING});
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -21,6 +22,7 @@ export const register = ({ name, email, password }) => async (dispatch) => {
     });
     dispatch(loadUser());
   } catch (error) {
+    dispatch({type: actionType.STOP_LOADING});
     dispatch({
       type: actionType.GET_ERRORS,
       payload: error.response.data
@@ -54,6 +56,7 @@ export const loadUser = () => async (dispatch) => {
  * @desc Login User
  */
 export const login = (email, password) => async (dispatch) => {
+  dispatch({type: actionType.START_LOADING});
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -67,6 +70,7 @@ export const login = (email, password) => async (dispatch) => {
       payload: res.data,
     });
   } catch (error) {
+    dispatch({type: actionType.STOP_LOADING});
     dispatch({
       type: actionType.GET_ERRORS,
       payload: error.response.data
