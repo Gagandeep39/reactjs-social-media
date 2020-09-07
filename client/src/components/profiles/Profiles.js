@@ -15,7 +15,7 @@ const Profiles = ({ getAllProfiles, profile: { profiles, loading } }) => {
         <Spinner />
       ) : (
         <Fragment>
-          <h1 className='large text-primary'> Developers</h1>
+          <h4 className='display-4'> Developers</h4>
           <p className='lead'>
             <i className='fab fa-connectdevelop'></i> Browse and connect with
             developers
@@ -26,7 +26,7 @@ const Profiles = ({ getAllProfiles, profile: { profiles, loading } }) => {
                 <ProfileItem key={profile._id} profile={profile} />
               ))
             ) : (
-              <h4>No Profiles Found...</h4>
+              <h4 className='display-4'>No Profiles Found...</h4>
             )}
           </div>
         </Fragment>
