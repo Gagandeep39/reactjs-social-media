@@ -31,7 +31,7 @@ const ProfileItem = ({
               )}
               <br />
             </p>
-            <ul className='col-3' style={{ float: 'right' }}>
+            <ul className='col-3' style={{ float: 'right', listStyleType: 'none' }}>
               {skills.slice(0, 4).map((skill, index) => (
                 <li key={index} className='text-primary'>
                   <i className='fas fa-check'></i> {skill}
