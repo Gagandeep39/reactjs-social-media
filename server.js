@@ -3,6 +3,7 @@ const app = express();
 const morgan = require('morgan');
 const passport = require('passport');
 const swaggerUi = require('swagger-ui-express');
+const path = require('path');
 const swaggerJSDoc = require('swagger-jsdoc');
 require('dotenv').config();
 require('./config/passport')(passport);
