@@ -73,7 +73,6 @@ export const getProfileById = (userId) => async (dispatch) => {
  * @desc Get Github Repos
  */
 export const getGithubRepositories = (username) => async (dispatch) => {
-
   try {
     const res = await axios.get('/api/profile/github/' + username);
     dispatch({
@@ -116,10 +115,10 @@ export const createOrUpdateProfile = (
     console.log(error.response);
     dispatch({
       type: actionType.GET_ERRORS,
-      payload: error.response.data
-    })
+      payload: error.response.data,
+    });
     setTimeout(() => {
-      dispatch({type: actionType.CLEAR_ERRORS})
+      dispatch({ type: actionType.CLEAR_ERRORS });
     }, 3000);
   }
 };
@@ -142,15 +141,14 @@ export const addExperience = (formData, history) => async (dispatch) => {
     dispatch(setAlert('Experience added', 'success'));
     history.push('/dashboard');
   } catch (error) {
-    const errorArray = error.response.data.errors;
-    errorArray.forEach((e) => dispatch(setAlert(e.msg, 'danger')));
+    console.log(error.response);
     dispatch({
-      type: actionType.PROFILE_ERROR,
-      payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
-      },
+      type: actionType.GET_ERRORS,
+      payload: error.response.data,
     });
+    setTimeout(() => {
+      dispatch({ type: actionType.CLEAR_ERRORS });
+    }, 3000);
   }
 };
 
@@ -172,15 +170,14 @@ export const addEducation = (formData, history) => async (dispatch) => {
     dispatch(setAlert('Education Added', 'success'));
     history.push('/dashboard');
   } catch (error) {
-    const errorArray = error.response.data.errors;
-    errorArray.forEach((e) => dispatch(setAlert(e.msg, 'danger')));
+    console.log(error.response);
     dispatch({
-      type: actionType.PROFILE_ERROR,
-      payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
-      },
+      type: actionType.GET_ERRORS,
+      payload: error.response.data,
     });
+    setTimeout(() => {
+      dispatch({ type: actionType.CLEAR_ERRORS });
+    }, 3000);
   }
 };
 
