@@ -63,144 +63,149 @@ const CreateProfile = ({ createOrUpdateProfile, history, errors }) => {
   };
 
   return (
-    <Fragment>
-      <h1 className='large text-primary'>Create Your Profile</h1>
-      <p className='lead'>
-        <i className='fas fa-user'></i> Let's get some information to make your
-        profile stand out
-      </p>
-      <small>* = required field</small>
-      <form className='form' onSubmit={handleSubmit}>
-        <SelectListGroup
-          placeholder='Status'
-          name='status'
-          value={status}
-          onChange={onChange}
-          options={options}
-          error={errors.status}
-          info='Give us an idea of where you are at in your career'
-        />
-        <TextFieldGroup
-          type='text'
-          placeholder='Company'
-          name='company'
-          onChange={onChange}
-          value={company}
-          error={errors.company}
-          info='Could be your own company or one you work for'
-        />
-        <TextFieldGroup
-          type='text'
-          placeholder='Website'
-          name='website'
-          onChange={onChange}
-          value={website}
-          error={errors.website}
-          info='Could be your own or a company website'
-        />
-        <TextFieldGroup
-          type='text'
-          placeholder='Location'
-          name='location'
-          onChange={(e) => onChange(e)}
-          value={location}
-          error={errors.location}
-          info='City & state suggested (eg. Boston, MA)'
-        />
-        <TextFieldGroup
-          type='text'
-          placeholder='* Skills'
-          name='skills'
-          onChange={onChange}
-          value={skills}
-          error={errors.skills}
-          info='Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)'
-        />
-        <TextFieldGroup
-          type='text'
-          placeholder='Github Username'
-          name='githubusername'
-          onChange={onChange}
-          value={githubusername}
-          error={errors.githubusername}
-          info='If you want your latest repos and a Github link, include your
+    <div className='container m-4'>
+      <div className='card'>
+        <div className='card-body'>
+          <h4 className='display-4'> Create your profile</h4>
+          <hr />
+          <form className='form' onSubmit={handleSubmit}>
+            <p className='lead'>
+              <i className='fas fa-user'></i> Let's get some information to make
+              your profile stand out
+            </p>
+
+            <SelectListGroup
+              placeholder='Status'
+              name='status'
+              value={status}
+              onChange={onChange}
+              options={options}
+              error={errors.status}
+              info='Give us an idea of where you are at in your career'
+            />
+            <TextFieldGroup
+              type='text'
+              placeholder='Company'
+              name='company'
+              onChange={onChange}
+              value={company}
+              error={errors.company}
+              info='Could be your own company or one you work for'
+            />
+            <TextFieldGroup
+              type='text'
+              placeholder='Website'
+              name='website'
+              onChange={onChange}
+              value={website}
+              error={errors.website}
+              info='Could be your own or a company website'
+            />
+            <TextFieldGroup
+              type='text'
+              placeholder='Location'
+              name='location'
+              onChange={(e) => onChange(e)}
+              value={location}
+              error={errors.location}
+              info='City & state suggested (eg. Boston, MA)'
+            />
+            <TextFieldGroup
+              type='text'
+              placeholder='* Skills'
+              name='skills'
+              onChange={onChange}
+              value={skills}
+              error={errors.skills}
+              info='Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)'
+            />
+            <TextFieldGroup
+              type='text'
+              placeholder='Github Username'
+              name='githubusername'
+              onChange={onChange}
+              value={githubusername}
+              error={errors.githubusername}
+              info='If you want your latest repos and a Github link, include your
           username'
-        />
-        <TextAreaFieldGroup
-          placeholder='A short bio of yourself'
-          name='bio'
-          onChange={onChange}
-          value={bio}
-          error={errors.bio}
-          info='Tell us a little about yourself'
-        />
+            />
+            <TextAreaFieldGroup
+              placeholder='A short bio of yourself'
+              name='bio'
+              onChange={onChange}
+              value={bio}
+              error={errors.bio}
+              info='Tell us a little about yourself'
+            />
 
-        <div className='my-2'>
-          <button
-            type='button'
-            className='btn btn-light'
-            onClick={() => setDisplaySocialInputs(!displaySocialInputs)}
-          >
-            Add Social Network Links
-          </button>
-          <span>Optional</span>
+            <div className='my-2'>
+              <button
+                type='button'
+                className='btn btn-light mr-1'
+                onClick={() => setDisplaySocialInputs(!displaySocialInputs)}
+              >
+                Add Social Network Links
+              </button>
+              <span>Optional</span>
+            </div>
+            {displaySocialInputs ? (
+              <Fragment>
+                <InputGroup
+                  placeholder='Twitter Profile URL'
+                  name='twitter'
+                  icon='fab fa-twitter'
+                  onChange={onChange}
+                  value={twitter}
+                  error={errors.twitter}
+                />
+                <InputGroup
+                  type='text'
+                  placeholder='Facebook URL'
+                  name='facebook'
+                  onChange={onChange}
+                  value={facebook}
+                  icon='fab fa-facebook'
+                  error={errors.facebook}
+                />
+                <InputGroup
+                  type='text'
+                  placeholder='YouTube URL'
+                  name='youtube'
+                  onChange={onChange}
+                  value={youtube}
+                  icon='fab fa-youtube'
+                  error={errors.youtube}
+                />
+
+                <InputGroup
+                  type='text'
+                  placeholder='Linkedin URL'
+                  name='linkedin'
+                  onChange={onChange}
+                  value={linkedin}
+                  icon='fab fa-linkedin'
+                  error={errors.linkedin}
+                />
+                <InputGroup
+                  type='text'
+                  placeholder='Instagram URL'
+                  name='instagram'
+                  onChange={onChange}
+                  value={instagram}
+                  icon='fab fa-instagram'
+                  error={errors.instagram}
+                />
+              </Fragment>
+            ) : null}
+
+            <input type='submit' className='btn btn-primary mr-1' />
+            <Link className='btn btn-light' to='/dashboard'>
+              Go Back
+            </Link>
+          </form>
         </div>
-        {displaySocialInputs ? (
-          <Fragment>
-            <InputGroup
-              placeholder='Twitter Profile URL'
-              name='twitter' 
-              icon='fab fa-twitter'
-              onChange={onChange}
-              value={twitter}
-              error={errors.twitter}
-            />
-            <InputGroup
-              type='text'
-              placeholder='Facebook URL'
-              name='facebook'
-              onChange={onChange}
-              value={facebook}
-              icon='fab fa-facebook'
-              error={errors.facebook}
-            />
-            <InputGroup
-              type='text'
-              placeholder='YouTube URL'
-              name='youtube'
-              onChange={onChange}
-              value={youtube}
-              icon='fab fa-youtube'
-              error={errors.youtube}
-            />
-
-            <InputGroup
-              type='text'
-              placeholder='Linkedin URL'
-              name='linkedin'
-              onChange={onChange}
-              value={linkedin}
-              icon='fab fa-linkedin'
-              error={errors.linkedin}
-            />
-            <InputGroup
-              type='text'
-              placeholder='Instagram URL'
-              name='instagram'
-              onChange={onChange}
-              value={instagram}
-              icon='fab fa-instagram'
-              error={errors.instagram}
-            />
-          </Fragment>
-        ) : null}
-
-        <input type='submit' className='btn btn-primary my-1' />
-        <Link className='btn btn-light my-1' to='/dashboard'>
-          Go Back
-        </Link>
-      </form>
-    </Fragment>
+      </div>
+    </div>
   );
 };
 
