@@ -44,6 +44,9 @@ export const addLike = (postId) => async (dispatch) => {
         status: error.response.status,
       },
     });
+    setTimeout(() => {
+      dispatch({ type: actionType.CLEAR_ERRORS });
+    }, 3000);
   }
 };
 
@@ -202,5 +205,8 @@ export const deleteComment = (postId, commentId) => async (dispatch) => {
         status: error.response.status,
       },
     });
+    setTimeout(() => {
+      dispatch({ type: actionType.CLEAR_ERRORS });
+    }, 3000);
   }
 };
