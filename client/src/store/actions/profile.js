@@ -118,6 +118,9 @@ export const createOrUpdateProfile = (
       type: actionType.GET_ERRORS,
       payload: error.response.data
     })
+    setTimeout(() => {
+      dispatch({type: actionType.CLEAR_ERRORS})
+    }, 3000);
   }
 };
 

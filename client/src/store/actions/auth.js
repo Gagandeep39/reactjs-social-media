@@ -25,6 +25,10 @@ export const register = ({ name, email, password }) => async (dispatch) => {
       type: actionType.GET_ERRORS,
       payload: error.response.data
     })
+
+    setTimeout(() => {
+      dispatch({type: actionType.CLEAR_ERRORS})
+    }, 3000);
   }
 };
 
@@ -67,6 +71,9 @@ export const login = (email, password) => async (dispatch) => {
       type: actionType.GET_ERRORS,
       payload: error.response.data
     })
+    setTimeout(() => {
+      dispatch({type: actionType.CLEAR_ERRORS})
+    }, 3000);
     // dispatch(loadUser());
   }
 };
