@@ -22,7 +22,7 @@ const Dashboard = ({
     <Spinner />
   ) : (
     <Fragment>
-      <h1 className='large text-primary'>Dashboard</h1>
+      <h3 className='display-3'>Dashboard</h3>
       <p className='lead'>
         <i className='fas fa-user'></i> Welcome {user && user.name}
       </p>

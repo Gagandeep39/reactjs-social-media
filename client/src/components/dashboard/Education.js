@@ -17,23 +17,34 @@ const Education = ({ education, deleteEducation }) => {
           <Moment format='YYYY-MM-DD'>{edu.to}</Moment>
         )}
       </td>
-      <td className='btn btn-danger' onClick={() => deleteEducation(edu._id)}>Delete</td>
+      <td>
+        <button
+          className='btn btn-danger'
+          onClick={() => deleteEducation(edu._id)}
+        >
+          Delete{' '}
+        </button>
+      </td>
     </tr>
   ));
 
   return (
-    <Fragment>
-      <h2 className='my-2'>Education</h2>
-      <table className='table'>
-        <thead>
-          <th>School</th>
-          <th className='hide-sm'>Degree</th>
-          <th className='hide-sm'>Years</th>
-          <th className='hide-sm'>Action</th>
-        </thead>
-        <tbody>{educations}</tbody>
-      </table>
-    </Fragment>
+    <div className='card my-2'>
+      <div className='card-body'>
+        <h4 className='display-4'>Education</h4>
+        <table className='table table-hover'>
+          <thead>
+            <tr>
+              <th>School</th>
+              <th className='hide-sm'>Degree</th>
+              <th className='hide-sm'>Years</th>
+              <th className='hide-sm'>Action</th>
+            </tr>
+          </thead>
+          <tbody>{educations}</tbody>
+        </table>
+      </div>
+    </div>
   );
 };
 

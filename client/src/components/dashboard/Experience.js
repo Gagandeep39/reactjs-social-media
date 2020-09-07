@@ -17,25 +17,34 @@ const Experience = ({ experience, deleteExperience }) => {
           <Moment format='YYYY-MM-DD'>{exp.to}</Moment>
         )}
       </td>
-      <td className='btn btn-danger' onClick={() => deleteExperience(exp._id)}>
-        Delete
+      <td>
+        <button
+          className='btn btn-danger'
+          onClick={() => deleteExperience(exp._id)}
+        >
+          Delete{' '}
+        </button>
       </td>
     </tr>
   ));
 
   return (
-    <Fragment>
-      <h2 className='my-2'>Work Experience</h2>
-      <table className='table'>
-        <thead>
+    <div className='card my-2'>
+      <div className='card-body'>
+        <h4 className='display-4'>Work Experience</h4>
+        <table className='table table-hover'>
+          <thead>
+            <tr>
           <th>Company</th>
           <th className='hide-sm'>Title</th>
           <th className='hide-sm'>Years</th>
           <th className='hide-sm'>Action</th>
-        </thead>
-        <tbody>{experiences}</tbody>
-      </table>
-    </Fragment>
+            </tr>
+          </thead>
+          <tbody>{experiences}</tbody>
+        </table>
+      </div>
+    </div>
   );
 };
 
