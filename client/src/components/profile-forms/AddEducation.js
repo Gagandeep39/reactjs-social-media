@@ -38,87 +38,91 @@ function AddEducation({ addEducation, history, errors }) {
   };
 
   return (
-    <Fragment>
-      <h1 className='large text-primary'>Add Your Education</h1>
-      <p className='lead'>
-        <i className='fas fa-graduation-cap'></i> Add any school, bootcamp, etc
-        that you have attended
-      </p>
-      <small>* = required field</small>
-      <form className='form' onSubmit={submitHandler}>
-        <TextFieldGroup
-          type='text'
-          placeholder='* School or Bootcamp'
-          name='school'
-          required
-          value={school}
-          onChange={changeHandler}
-          error={errors.school}
-        />
-        <TextFieldGroup
-          type='text'
-          placeholder='* Degree or Certificate'
-          name='degree'
-          required
-          value={degree}
-          onChange={changeHandler}
-          error={errors.degree}
-        />
-        <TextFieldGroup
-          type='text'
-          placeholder='Field Of Study'
-          name='fieldofstudy'
-          onChange={changeHandler}
-          value={fieldofstudy}
-          error={errors.fieldofstudy}
-        />
-        <h4>From Date</h4>
-        <TextFieldGroup
-          type='date'
-          name='from'
-          onChange={changeHandler}
-          value={from}
-          error={errors.from}
-        />
+    <div className='container m-4'>
+      <div className='card'>
+        <div className='card-body'>
+          <h4 className='display-4'> Add your education</h4>
+          <hr />
+          <form className='form' onSubmit={submitHandler}>
+            <p className='lead'>
+              <i className='fas fa-graduation-cap'></i> Add any school,
+              bootcamp, etc that you have attended
+            </p>
+            <TextFieldGroup
+              type='text'
+              placeholder='* School or Bootcamp'
+              name='school'
+              required
+              value={school}
+              onChange={changeHandler}
+              error={errors.school}
+            />
+            <TextFieldGroup
+              type='text'
+              placeholder='* Degree or Certificate'
+              name='degree'
+              required
+              value={degree}
+              onChange={changeHandler}
+              error={errors.degree}
+            />
+            <TextFieldGroup
+              type='text'
+              placeholder='Field Of Study'
+              name='fieldofstudy'
+              onChange={changeHandler}
+              value={fieldofstudy}
+              error={errors.fieldofstudy}
+            />
+            <h4>From Date</h4>
+            <TextFieldGroup
+              type='date'
+              name='from'
+              onChange={changeHandler}
+              value={from}
+              error={errors.from}
+            />
 
-        <div className='form-group'>
-          <p>
-            <input
-              type='checkbox'
-              name='current'
-              value={current}
-              checked={current}
-              onChange={() => {
-                setFormData({ ...formData, current: !current });
-                setDateDisabled(!dateDisabled);
-              }}
-            />{' '}
-            Current School or Bootcamp
-          </p>
+            <div className='form-group'>
+              <p>
+                <input
+                  type='checkbox'
+                  name='current'
+                  value={current}
+                  checked={current}
+                  onChange={() => {
+                    setFormData({ ...formData, current: !current });
+                    setDateDisabled(!dateDisabled);
+                  }}
+                />{' '}
+                Current School or Bootcamp
+              </p>
+            </div>
+            <h4>To Date</h4>
+            <TextFieldGroup
+              type='date'
+              name='to'
+              disabled={dateDisabled}
+              onChange={changeHandler}
+              value={to}
+              error={errors.to}
+            />
+            <TextAreaFieldGroup
+              value={description}
+              onChange={changeHandler}
+              placeholder='Program Description'
+              name='description'
+              error={errors.description}
+              info='Tell us a little about yourself'
+            />
+            <input type='submit' className='btn btn-primary my-1' />
+            <Link className='btn btn-light my-1' to='/dashboard'>
+              Go Back
+            </Link>
+          </form>
         </div>
-        <h4>To Date</h4>
-        <TextFieldGroup
-          type='date'
-          name='to'
-          disabled={dateDisabled}
-          onChange={changeHandler}
-          value={to}
-          error={errors.to}
-        />
-        <TextAreaFieldGroup
-          value={description}
-          onChange={changeHandler}
-          placeholder='Program Description'
-          name='description'
-          error={errors.description}
-          info='Tell us a little about yourself'
-        />
-        <input type='submit' className='btn btn-primary my-1' />
-        <Link className='btn btn-light my-1' to='/dashboard'>
-          Go Back
-        </Link>
-      </form>
-    </Fragment>
+      </div>
+    </div>
   );
 }
 
