@@ -13,7 +13,7 @@ function CommentForm({ postId, addComment, errors }) {
   };
   return (
     <div class='post-form'>
-      <div class='bg-primary p'>
+      <div>
         <h3>Leave A Comment</h3>
       </div>
       <form class='form my-1' onSubmit={handleSubmit}>

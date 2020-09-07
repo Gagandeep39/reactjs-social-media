@@ -12,27 +12,37 @@ function CommentItem({
   auth,
 }) {
   return (
-    <div class='post bg-white p-1 my-1'>
-      <div>
-        <Link to={'/profile/' + user}>
-          <img class='round-img' src={avatar} alt='' />
-          <h4>{name}</h4>
-        </Link>
-      </div>
-      <div>
-        <p class='my-1'>{text}</p>
-        <p class='post-date'>
-          Posted on <Moment format='DD-MM-YYYY'>{date}</Moment>
-        </p>
-        {!auth.loading && user === auth.user._id && (
-          <button
-            type='button'
-            class='btn btn-danger'
-            onClick={() => deleteComment(postId, _id)}
-          >
-            <i class='fas fa-times'></i> Delete
-          </button>
-        )}
+    <div class='container-fluid '>
+      <div class='row' style={{ display: 'block' }}>
+        <div class='card rounded-0'>
+          <div class='card-horizontal'>
+            <div class='img-square-wrapper'>
+              <Link to={'/profile/' + user}>
+                <img class='comment-round-img' src={avatar} alt='' />
+              </Link>
+            </div>
+            <div class='card-body'>
+              <p class='card-text'>
+                {text}
+
+                {!auth.loading && user === auth.user._id && (
+                  <button
+                    type='button'
+                    style={{ float: 'right' }}
+                    class='btn btn-danger'
+                    onClick={() => deleteComment(postId, _id)}
+                  >
+                    <i class='fas fa-times'></i>
+                  </button>
+                )}
+              </p>
+            </div>
+          </div>
+
+          <div className='card-footer w-100 text-muted comment-footer'>
+            Posted on <Moment format='DD-MM-YYYY'>{date}</Moment>
+          </div>
+        </div>
       </div>
     </div>
   );
