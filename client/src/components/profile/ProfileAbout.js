@@ -9,22 +9,25 @@ function ProfileAbout({
   },
 }) {
   return (
-    <div class='profile-about bg-light p-2'>
+    <div class='card mt-2'>
+      <div className='card-body'>
       {bio && (
         <Fragment>
-          <h2 class='text-primary'>{name.trim().split(' ')[0]}'s Bio</h2>
+          <h3 class='card-title'>{name.trim().split(' ')[0]}'s Bio</h3>
           <p>{bio}</p>
         </Fragment>
       )}
-      <div class='line'></div>
-      <h2 class='text-primary'>Skill Set</h2>
-      <div class='skills'>
+      <hr />
+      <h3 class='card-text'>Skill Set</h3><div class='skills'>
         {skills.map((skill, index) => (
-          <div key={index} class='p-1'>
-            <i class='fa fa-check'></i> {skill}
+          <div key={index} class='lead'>
+            {/* <i class='fa fa-check'></i>  */}
+                <span class='badge badge-info tags'> {skill} </span>
           </div>
         ))}
       </div>
+      </div>
+      
     </div>
   );
 }

@@ -13,6 +13,9 @@
 .active-nav {
   border-bottom: 2px solid currentColor;
 }
+.fa-2x {
+  padding-left: 4px;
+}
 .social-input i.fa-twitter {
   color: #38a1f3;
 }

@@ -10,41 +10,43 @@ function ProfileGithub({ username, getGithubRepositories, repos }) {
   }, [getGithubRepositories, username]);
 
   return (
-    <div class='profile-github'>
-      <h2 class='text-primary my-1'>
+    <div class='card mt-2'>
+      <h2 class='card-header'>
         <i class='fab fa-github'></i> Github Repos
       </h2>
-      {repos === null ? (
-        <Spinner />
-      ) : (
-        repos.map((repo) => (
-          <div key={repo.id} class='repo bg-white p-1 my-1'>
-            <div>
-              <h4>
-                <a
-                  href={repo.html_url}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                >
-                  {repo.name}
-                </a>
-              </h4>
-              <p>{repo.description}</p>
+      <div className='list-group list-group-flush'>
+        {repos === null ? (
+          <Spinner />
+        ) : (
+          repos.map((repo) => (
+            <div key={repo.id} class='list-group-item'>
+              <div>
+                <h3 className='lead'>
+                  <a
+                    href={repo.html_url}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                  >
+                    {repo.name}
+                  </a>
+                  <span style={{ float: 'right' }}>
+                    <span class='badge badge-primary ml-2'>
+                      Stars: {repo.stargazers_count}{' '}
+                    </span>
+                    <span class='badge badge-dark ml-2'>
+                      Watchers: {repo.watchers_count}{' '}
+                    </span>
+                    <span class='badge badge-light ml-2'>
+                      Forks: {repo.forks_count}{' '}
+                    </span>
+                  </span>
+                </h3>
+                <p>{repo.description}</p>
+              </div>
             </div>
-            <div>
-              <ul>
-                <li class='badge badge-primary'>
-                  Stars: {repo.stargazers_count}{' '}
-                </li>
-                <li class='badge badge-dark'>
-                  Watchers: {repo.watchers_count}{' '}
-                </li>
-                <li class='badge badge-light'>Forks: {repo.forks_count} </li>
-              </ul>
-            </div>
-          </div>
-        ))
-      )}
+          ))
+        )}
+      </div>
     </div>
   );
 }

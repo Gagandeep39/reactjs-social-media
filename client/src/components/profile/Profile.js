@@ -26,41 +26,42 @@ function Profile({
         <Spinner />
       ) : (
         <Fragment>
-          <Link to='/profiles' className='btn btn-light'>
+          <Link to='/profiles' className='btn btn-outline-secondary my-1'>
             Back
           </Link>
           {auth.isAuthenticated &&
             auth.loading === false &&
             auth.user._id === profile.user._id && (
-              <Link className='btn btn-dark'>Edit Profile</Link>
+              <Link className='btn btn-outline-primary ml-1'>Edit Profile</Link>
             )}
-
           <div class='profile-grid my-1'>
             <ProfileTop profile={profile} />
             <ProfileAbout profile={profile} />
-            <div className='profile-exp bg-white p-2'>
-              <h2 class='text-primary'>Experience</h2>
-              {profile.experience.length > 0 ? (
-                <Fragment>
-                  {profile.experience.map((experience, index) => (
-                    <ProfileExperience key={index} experience={experience} />
-                  ))}
-                </Fragment>
-              ) : (
-                <h4>No Experience</h4>
-              )}
-            </div>
-            <div class='profile-edu bg-white p-2'>
-              <h2 class='text-primary'>Education</h2>
-              {profile.education.length > 0 ? (
-                <Fragment>
-                  {profile.education.map((edu, index) => (
-                    <ProfileEducation key={index} education={edu} />
-                  ))}
-                </Fragment>
-              ) : (
-                <h4>No Education</h4>
-              )}
+            <div className='row'>
+              <div className='col'>
+                <h2 className='card card-header mt-2'>Experience</h2>
+                {profile.experience.length > 0 ? (
+                  <Fragment>
+                    {profile.experience.map((experience, index) => (
+                      <ProfileExperience key={index} experience={experience} />
+                    ))}
+                  </Fragment>
+                ) : (
+                  <h4>No Experience</h4>
+                )}
+              </div>
+              <div class='col'>
+                <h3 className='card card-header mt-2'> Education</h3>
+                {profile.education.length > 0 ? (
+                  <Fragment>
+                    {profile.education.map((edu, index) => (
+                      <ProfileEducation key={index} education={edu} />
+                    ))}
+                  </Fragment>
+                ) : (
+                  <h4>No Education</h4>
+                )}
+              </div>
             </div>
             {profile.githubusername && (
               <ProfileGithub username={profile.githubusername} />

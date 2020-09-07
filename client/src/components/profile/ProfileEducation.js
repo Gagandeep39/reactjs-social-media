@@ -6,23 +6,25 @@ const ProfileEducation = ({
   education: { school, degree, fieldofstudy, from, to, description, current },
 }) => {
   return (
-    <div>
-      <h3 class='text-dark'>{school} </h3>
-      <p>
-        <Moment format='DD-MM-YYYY'>{from}</Moment> -{' '}
-        {current ? 'Current' : <Moment format='DD-MM-YYYY'>{to}</Moment>}
-      </p>
-      <p>
-        <strong>Degree: </strong>
-        {degree}
-      </p>
-      <p>
-        <strong>Field Of Study: </strong>
-        {fieldofstudy}
-      </p>
-      <p>
-        <strong>Description: </strong> {description}
-      </p>
+    <div className='card' style={{ borderRadius: '0px' }}>
+      <div className='card-body'>
+        <h3 className='card-title'>{school} </h3>
+        <hr />
+        <p>
+          <Moment format='DD-MM-YYYY'>{from}</Moment> -{' '}
+          {current ? 'Current' : <Moment format='DD-MM-YYYY'>{to}</Moment>}
+        </p>
+        <p>
+          <strong>Degree: </strong>
+          {degree}
+        </p>
+        <p>
+          <strong>Field Of Study: </strong>
+          {fieldofstudy}
+          <br />
+          <strong>Description: </strong> {description}
+        </p>
+      </div>
     </div>
   );
 };
