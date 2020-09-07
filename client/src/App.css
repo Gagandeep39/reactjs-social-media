@@ -5,7 +5,8 @@
 }
 
 .navbar a:hover {
-  color: rgb(167, 163, 163);
+  border-bottom: 2px solid currentColor;
+  color: #fff;
   text-decoration: none;
 }
 
@@ -34,4 +35,16 @@
   margin-right: -50%;
   transform: translate(-50%, -50%);
   text-align: center;
+}
+
+.card-horizontal {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.round-img {
+  height: 8rem;
+  width: 8rem;
+  margin: 12px;
+  border-radius: 50%;
 }

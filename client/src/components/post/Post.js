@@ -16,7 +16,7 @@ function Post({ getPostById, post: { post, loading }, match }) {
     <Spinner />
   ) : (
     <Fragment>
-      <Link className='btn' to='/posts'>
+      <Link className='btn btn-dark mt-2' to='/posts'>
         Back
       </Link>
       <PostItem post={post} showActions={false} />

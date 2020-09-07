@@ -14,24 +14,25 @@ function PostItem({
   showActions,
 }) {
   return (
-    <div class='post bg-white p-1 my-1'>
-      <div>
-        <Link to={'/profile/' + user}>
-          <img class='round-img' src={avatar} alt='' />
-          <h4> {name} </h4>
-        </Link>
-      </div>
-      <div>
-        <p class='my-1'>{text}</p>
-        <p class='post-date'>
-          Posted on <Moment format='DD-MM-YYYY'>{date}</Moment>{' '}
-        </p>
-        {showActions && (
+    <div class='container-fluid'>
+      <div class='row' style={{display: 'block'}}>
+        <div class='mt-3'>
+          <div class='card'>
+            <div class='card-horizontal'>
+              <div class='img-square-wrapper'>
+                <Link to={'/profile/' + user}>
+                  <img class='round-img' src={avatar} alt='' />
+                </Link>
+              </div>
+              <div class='card-body'>
+                <h4 class='card-title'>{name}</h4>
+                <p class='card-text'>{text}</p>
+                {showActions && (
           <Fragment>
             <button
               onClick={() => addLike(_id)}
               type='button'
-              class='btn btn-light'
+              class='btn btn-light m-1'
             >
               <i class='fas fa-thumbs-up'></i>
               {likes.length > 0 && <span> {likes.length} </span>}
@@ -39,27 +40,35 @@ function PostItem({
             <button
               onClick={() => removeLike(_id)}
               type='button'
-              class='btn btn-light'
+              class='btn btn-light m-1'
             >
               <i class='fas fa-thumbs-down'></i>
             </button>
-            <Link to={'/posts/' + _id} class='btn btn-primary'>
+            <Link to={'/posts/' + _id} class='btn btn-primary m-1'>
               Discussion{' '}
               {comments.length > 0 && (
-                <span class='comment-count'> {comments.length} </span>
+                <span class='badge badge-light'> {comments.length} </span>
               )}
             </Link>
             {!auth.loading && user === auth.user._id && (
               <button
                 onClick={() => deletePost(_id)}
                 type='button'
-                class='btn btn-danger'
+                class='btn btn-danger m-1'
               >
                 <i class='fas fa-times'></i>
               </button>
             )}
           </Fragment>
         )}
+              </div>
+            </div>
+            
+            <div className='card-footer w-100 text-muted'>
+            Posted on <Moment format='DD-MM-YYYY'>{date}</Moment>{' '}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

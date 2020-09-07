@@ -14,20 +14,22 @@ function PostForm({ createPost, errors }) {
   };
 
   return (
-    <div class='post-form'>
-      <div class='bg-primary p'>
-        <h3>Say Something...</h3>
+    <div className='card'>
+      <div className='card-body'>
+        <h5> Say Something...</h5>
+        <hr />
+
+        <form class='form my-1' onSubmit={handleSubmit}>
+          <TextAreaFieldGroup
+            name='text'
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder='Create a post'
+            error={errors.text}
+          />
+          <input type='submit' class='btn btn-dark my-1' value='Submit' />
+        </form>
       </div>
-      <form class='form my-1' onSubmit={handleSubmit}>
-        <TextAreaFieldGroup
-          name='text'
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder='Create a post'
-          error={errors.text}
-        />
-        <input type='submit' class='btn btn-dark my-1' value='Submit' />
-      </form>
     </div>
   );
 }
