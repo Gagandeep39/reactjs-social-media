@@ -22,10 +22,10 @@ const Dashboard = ({
     <Spinner />
   ) : (
     <Fragment>
-      <h3 className='display-3'>Dashboard</h3>
-      <p className='lead'>
-        <i className='fas fa-user'></i> Welcome {user && user.name}
-      </p>
+      {/* <h3 className='display-3'>Dashboard</h3> */}
+      <h4 className='display-4 my-2'>
+        <i className='fas fa-user'></i> Welcome, {user && user.name}
+      </h4>
       {profile !== null ? (
         <Fragment>
           <DashboardActions />
