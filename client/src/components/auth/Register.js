@@ -29,6 +29,7 @@ const Register = ({ setAlert, register, isAuthenticated, errors, loading }) => {
         name,
         email,
         password,
+        password2
       };
       register(newUser);
     }
